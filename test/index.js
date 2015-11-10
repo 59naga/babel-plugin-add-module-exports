@@ -13,8 +13,8 @@ exports.default = 'foo';
 module.exports = exports.default;`
 
 // Specs
-describe('babel-plugin-module-exports',()=>{
-  it('Nope.',()=>{
+describe('babel-plugin-module-exports',function(){
+  it('Nope.',function(){
     var result= babel.transform(str,{
       presets: ['es2015'],
       plugins: ['transform-es2015-modules-commonjs'],
@@ -23,7 +23,7 @@ describe('babel-plugin-module-exports',()=>{
     assert(result.code !== out)
   })
 
-  it('Add the `module.exports = exports.default;` to EOF.',()=>{
+  it('Add the `module.exports = exports.default;` to EOF.',function(){
     var result= babel.transform(str,{
       presets: ['es2015'],
       plugins: ['../lib/index.js'],
