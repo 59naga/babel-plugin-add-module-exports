@@ -44,4 +44,17 @@ describe('babel-plugin-module-exports',function(){
     assert(result.code.match('module.exports') !== null)
     assert(result.code === out)
   })
+
+  it('issue#1',()=>{
+    var result= babel.transform(str,{
+      presets: ['es2015'],
+      plugins: [
+        '../lib/index.js',
+        '../lib/index.js',
+        '../lib/index.js',
+      ],
+    })
+    assert(result.code.match('module.exports') !== null)
+    assert(result.code === out)
+  })
 })
