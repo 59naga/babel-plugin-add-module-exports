@@ -3,14 +3,18 @@ var babel= require('babel-core')
 var assert= require('power-assert')
 
 // Fixture
-var str=`export default 'foo'`
+var str=`let foo= 'bar'
+export default 'baz'
+export {foo}`
 var out=`'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = 'foo';
-module.exports = exports.default;`
+var foo = 'bar';
+exports.default = 'baz';
+exports.foo = foo;
+module.exports = Object.assign(exports.default, exports);`
 
 // Specs
 describe('babel-plugin-module-exports',function(){
@@ -32,7 +36,7 @@ describe('babel-plugin-module-exports',function(){
     assert(result.code !== out)
   })
 
-  it('Add the `module.exports = exports.default;` to EOF.',()=>{
+  it('Add the `module.exports = Object.assign(exports.default,exports);` to EOF.',()=>{
     var result= babel.transform(str,{
       presets: ['es2015'],
       plugins: ['../lib/index.js'],
