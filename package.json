@@ -1,0 +1,52 @@
+{
+  "name": "babel-plugin-add-module-exports",
+  "version": "0.0.0",
+  "description": "Fix babel/babel#2212",
+
+  "main": "lib",
+  "files": [
+    "lib"
+  ],
+
+  "scripts": {
+    "start": "mocha --bail --watch --require intelli-espower-loader",
+    "test": "istanbul cover _mocha --report text --report html --report lcov -- -R spec",
+    "posttest": "npm run lint",
+    "lint": "eslint lib test --config 59naga"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm test"
+    }
+  },
+
+  "devDependencies": {
+    "babel-core": "^6.1.2",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.1.3",
+    "babel-preset-es2015": "^6.1.2",
+    "babel-template": "^6.0.16",
+    "eslint": "^1.9.0",
+    "eslint-config-59naga": "0.0.5",
+    "espower-loader": "^1.0.0",
+    "ghooks": "^0.3.2",
+    "intelli-espower-loader": "^1.0.0",
+    "istanbul": "^0.4.0",
+    "mocha": "^2.3.3",
+    "power-assert": "^1.1.0"
+  },
+
+  "keywords": [
+    "babel-plugin",
+    "module.exports"
+  ],
+  "author": "59naga <i59naga@icloud.com> (http://berabou.me)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/59naga/babel-plugin-add-module-exports.git"
+  },
+  "bugs": {
+    "url": "https://github.com/59naga/babel-plugin-add-module-exports/issues"
+  },
+  "homepage": "https://github.com/59naga/babel-plugin-add-module-exports#readme"
+}
