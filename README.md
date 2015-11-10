@@ -41,7 +41,7 @@ require('./bundle.js') // { default: 'foo' }
 require('./bundle.js').default // 'foo'
 ```
 
-This plugin add the `module.exports` to EOF.
+The `babel-plugin-add-module-exports` add the `module.exports` to EOF.
 
 ```bash
 npm install babel-plugin-add-module-exports --save-dev
