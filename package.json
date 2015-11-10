@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "description": "Fix babel/babel#2212",
 
+  "engines": {
+    "npm" : "^3.3.9"
+  },
   "main": "lib",
   "files": [
     "lib"

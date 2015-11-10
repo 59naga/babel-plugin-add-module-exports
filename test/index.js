@@ -14,7 +14,16 @@ module.exports = exports.default;`
 
 // Specs
 describe('babel-plugin-module-exports',function(){
-  it('Nope.',function(){
+  // wait for the babel-preset-es2015
+  this.timeout(5000)
+  before(()=>{
+    babel.transform('',{
+      presets: ['es2015'],
+      plugins: ['transform-es2015-modules-commonjs'],
+    })
+  })
+
+  it('Nope.',()=>{
     var result= babel.transform(str,{
       presets: ['es2015'],
       plugins: ['transform-es2015-modules-commonjs'],
@@ -23,7 +32,7 @@ describe('babel-plugin-module-exports',function(){
     assert(result.code !== out)
   })
 
-  it('Add the `module.exports = exports.default;` to EOF.',function(){
+  it('Add the `module.exports = exports.default;` to EOF.',()=>{
     var result= babel.transform(str,{
       presets: ['es2015'],
       plugins: ['../lib/index.js'],
