@@ -1,7 +1,5 @@
-BabelPlugin `Add module.exports`  [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][cover-image]][cover] [![Climate Status][climate-image]][climate]
+`module.exports` plugin [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][cover-image]][cover] [![Climate Status][climate-image]][climate]
 ---
-
-> Fix [Kill CommonJS default export behaviour - babel/babel#2212](https://github.com/babel/babel/issues/2212)
 
 Installation
 ---
@@ -14,6 +12,8 @@ Why?
 ---
 
 [babel-plugin-transform-es2015-modules-commonjs@6.1.3](https://www.npmjs.com/package/babel-plugin-transform-es2015-modules-commonjs) doesn't support the `module.exports`.
+
+> [Kill CommonJS default export behaviour - babel/babel#2212](https://github.com/babel/babel/issues/2212)
 
 ```js
 // index.js
