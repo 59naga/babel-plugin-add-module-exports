@@ -1,5 +1,20 @@
-`module.exports` plugin [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][cover-image]][cover] [![Climate Status][climate-image]][climate]
+babel-plugin-add-module-exports
 ---
+
+<p align="right">
+  <a href="https://npmjs.org/package/babel-plugin-add-module-exports">
+    <img src="https://img.shields.io/npm/v/babel-plugin-add-module-exports.svg?style=flat-square">
+  </a>
+  <a href="https://travis-ci.org/59naga/babel-plugin-add-module-exports">
+    <img src="http://img.shields.io/travis/59naga/babel-plugin-add-module-exports.svg?style=flat-square">
+  </a>
+  <a href="https://codeclimate.com/github/59naga/babel-plugin-add-module-exports/coverage">
+    <img src="https://img.shields.io/codeclimate/github/59naga/babel-plugin-add-module-exports.svg?style=flat-square">
+  </a>
+  <a href="https://codeclimate.com/github/59naga/babel-plugin-add-module-exports">
+    <img src="https://img.shields.io/codeclimate/coverage/github/59naga/babel-plugin-add-module-exports.svg?style=flat-square">
+  </a>
+</p>
 
 Installation
 ---
@@ -93,17 +108,4 @@ babel index.js --presets es2015 --plugins add-module-exports,transform-object-as
 
 License
 ---
-[MIT][License]
-
-[License]: http://59naga.mit-license.org/
-
-[sauce-image]: http://soysauce.berabou.me/u/59798/babel-plugin-add-module-exports.svg
-[sauce]: https://saucelabs.com/u/59798
-[npm-image]:https://img.shields.io/npm/v/babel-plugin-add-module-exports.svg?style=flat-square
-[npm]: https://npmjs.org/package/babel-plugin-add-module-exports
-[travis-image]: http://img.shields.io/travis/59naga/babel-plugin-add-module-exports.svg?style=flat-square
-[travis]: https://travis-ci.org/59naga/babel-plugin-add-module-exports
-[cover-image]: https://img.shields.io/codeclimate/github/59naga/babel-plugin-add-module-exports.svg?style=flat-square
-[cover]: https://codeclimate.com/github/59naga/babel-plugin-add-module-exports/coverage
-[climate-image]: https://img.shields.io/codeclimate/coverage/github/59naga/babel-plugin-add-module-exports.svg?style=flat-square
-[climate]: https://codeclimate.com/github/59naga/babel-plugin-add-module-exports
+[MIT](http://59naga.mit-license.org/)
