@@ -26,7 +26,7 @@ npm install babel-plugin-add-module-exports --save-dev
 Why?
 ---
 
-[babel-plugin-transform-es2015-modules-commonjs@6.1.3](https://www.npmjs.com/package/babel-plugin-transform-es2015-modules-commonjs) doesn't support the `module.exports`.
+[babel-plugin-transform-es2015-modules-commonjs@6.1.4](https://www.npmjs.com/package/babel-plugin-transform-es2015-modules-commonjs) doesn't support the `module.exports`.
 
 > [Kill CommonJS default export behaviour - babel/babel#2212](https://github.com/babel/babel/issues/2212)
 
@@ -38,9 +38,9 @@ export {foo}
 ```
 
 ```bash
-npm install babel-cli@6.1.2 --global
+npm install babel-cli --global
 npm install babel-preset-es2015 --save-dev
-npm install babel-plugin-transform-es2015-modules-commonjs --save-dev
+npm install babel-plugin-transform-es2015-modules-commonjs@6.1.4 --save-dev
 
 babel index.js --presets es2015 --plugins transform-es2015-modules-commonjs > bundle.js
 # 'use strict';
