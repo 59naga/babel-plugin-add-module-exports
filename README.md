@@ -38,7 +38,7 @@ export {foo}
 ```
 
 ```bash
-npm install babel-core@6.1.2 --global
+npm install babel-cli@6.1.2 --global
 npm install babel-preset-es2015 --save-dev
 npm install babel-plugin-transform-es2015-modules-commonjs --save-dev
 
