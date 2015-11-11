@@ -14,7 +14,7 @@ Object.defineProperty(exports, "__esModule", {
 var foo = 'bar';
 exports.default = 'baz';
 exports.foo = foo;
-module.exports = Object.assign(exports.default, exports);`
+module.exports = Object.assign(exports.default || {}, exports);`
 
 // Specs
 describe('babel-plugin-module-exports',function(){

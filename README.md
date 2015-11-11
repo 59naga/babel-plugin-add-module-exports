@@ -73,7 +73,7 @@ babel index.js --presets es2015 --plugins add-module-exports > bundle.js
 # var foo = 'bar';
 # exports.default = 'baz';
 # exports.foo = foo;
-# module.exports = Object.assign(exports.default, exports);
+# module.exports = Object.assign(exports.default || {}, exports);
 ```
 
 Therefore, `.default` is the unnecessary.
@@ -103,7 +103,7 @@ babel index.js --presets es2015 --plugins add-module-exports,transform-object-as
 # var foo = 'bar';
 # exports.default = 'baz';
 # exports.foo = foo;
-# module.exports = _extends(exports.default, exports);
+# module.exports = _extends(exports.default || {}, exports);
 ```
 
 License
