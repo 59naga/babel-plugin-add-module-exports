@@ -29,8 +29,7 @@ describe('babel-plugin-add-module-exports', function () {
 
   it('Nope.', () => {
     var result = babel.transform(fixture, {
-      presets: ['es2015'],
-      plugins: ['transform-es2015-modules-commonjs']
+      presets: ['es2015']
     })
     fsExtra.outputFileSync(fixturePath + '/index.js', result.code)
 
