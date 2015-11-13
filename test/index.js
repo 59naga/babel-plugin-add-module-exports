@@ -47,7 +47,7 @@ describe('babel-plugin-add-module-exports', function () {
     fsExtra.outputFileSync(fixturePath + '/index.js', result.code)
 
     var object = require('fixture')
-    assert(object == 'baz')// not '==='
+    assert(object.toString() === 'baz') // need to invoke toString explicitly
     assert(object.default === 'baz')
     assert(object.foo === 'bar')
   })
@@ -64,7 +64,7 @@ describe('babel-plugin-add-module-exports', function () {
     fsExtra.outputFileSync(fixturePath + '/index.js', result.code)
 
     var object = require('fixture')
-    assert(object == 'baz')// not '==='
+    assert(object.toString() === 'baz') // need to invoke toString explicitly
     assert(object.default === 'baz')
     assert(object.foo === 'bar')
   })
