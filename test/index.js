@@ -28,7 +28,7 @@ function testPlugin (options, fn) {
 }
 
 describe('babel-plugin-add-module-exports', () => {
-  it('Nope.', () =>
+  it('should not export default to `module.exports` by default.', () =>
     testPlugin({
       presets: ['es2015']
     }, (module) => {
@@ -37,7 +37,7 @@ describe('babel-plugin-add-module-exports', () => {
       assert(module.foo === 'bar')
     }))
 
-  it('Add the `module.exports = Object.assign(exports.default,exports);` to EOF.', () =>
+  it('should export default to `module.exports` with this plugin', () =>
     testPlugin({
       presets: ['es2015'],
       plugins: ['../lib/index.js']
@@ -47,7 +47,7 @@ describe('babel-plugin-add-module-exports', () => {
       assert(module.foo === 'bar')
     }))
 
-  it('issue#1', () =>
+  it('should handle duplicated plugin references (#1)', () =>
     testPlugin({
       presets: ['es2015'],
       plugins: [
