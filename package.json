@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "start": "mocha --bail --watch --require intelli-espower-loader",
-    "test": "istanbul cover _mocha --report text --report html --report lcov -- -R spec",
+    "test": "istanbul cover _mocha --report text --report html --report lcov -- -R spec --timeout 30000",
     "posttest": "npm run lint",
     "lint": "eslint lib test"
   },

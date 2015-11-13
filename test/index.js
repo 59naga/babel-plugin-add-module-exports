@@ -15,9 +15,7 @@ export {foo}
 var fixturePath = 'node_modules/fixture'
 
 // Specs
-describe('babel-plugin-add-module-exports', function () {
-  this.timeout(5000) // wait for load the `babel-preset-es2015`
-
+describe('babel-plugin-add-module-exports', () => {
   beforeEach(() => {
     try {
       rimraf.sync(fixturePath)
