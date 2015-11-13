@@ -2,27 +2,19 @@
   "name": "babel-plugin-add-module-exports",
   "version": "0.0.4",
   "description": "Fix babel/babel#2212",
-
   "engines": {
-    "npm" : "^3.3.9"
+    "npm": "^3.3.9"
   },
   "main": "lib",
   "files": [
     "lib"
   ],
-
   "scripts": {
     "start": "mocha --bail --watch --require intelli-espower-loader",
     "test": "istanbul cover _mocha --report text --report html --report lcov -- -R spec",
     "posttest": "npm run lint",
     "lint": "eslint lib test"
   },
-  "config": {
-    "ghooks": {
-      "pre-commit": "npm test"
-    }
-  },
-  
   "dependencies": {
     "babel-template": "^6.0.16"
   },
@@ -36,14 +28,12 @@
     "eslint-plugin-standard": "^1.3.1",
     "espower-loader": "^1.0.0",
     "fs-extra": "^0.26.2",
-    "ghooks": "^0.3.2",
     "intelli-espower-loader": "^1.0.0",
     "istanbul": "^0.4.0",
     "mocha": "^2.3.3",
     "power-assert": "^1.1.0",
     "rimraf": "^2.4.3"
   },
-
   "keywords": [
     "babel-plugin",
     "module.exports"
