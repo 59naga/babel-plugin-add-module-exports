@@ -1,68 +1,63 @@
-/* eslint eqeqeq: 1 */
-
-// Dependencies
+var vm = require('vm')
 var babel = require('babel-core')
 var assert = require('power-assert')
-var fsExtra = require('fs-extra')
-var rimraf = require('rimraf')
 
-// Fixture
-var fixture = `
-let foo= 'bar'
-export default 'baz'
-export {foo}
-`
-var fixturePath = 'node_modules/fixture'
+function createSandbox () {
+  const exports = {}
+  const sandbox = {
+    exports,
+    module: { exports }
+  }
 
-// Specs
+  return sandbox
+}
+
+function testPlugin (options, fn) {
+  const fixture = `
+    let foo= 'bar'
+    export default 'baz'
+    export {foo}
+  `
+
+  const result = babel.transform(fixture, options)
+  const sandbox = createSandbox()
+
+  vm.runInNewContext(result.code, sandbox)
+
+  fn(sandbox.module.exports)
+}
+
 describe('babel-plugin-add-module-exports', () => {
-  beforeEach(() => {
-    try {
-      rimraf.sync(fixturePath)
-      delete require.cache[require.resolve('fixture')]
-    } catch (e) {
-
-    }
-  })
-
-  it('Nope.', () => {
-    var result = babel.transform(fixture, {
+  it('Nope.', () =>
+    testPlugin({
       presets: ['es2015']
-    })
-    fsExtra.outputFileSync(fixturePath + '/index.js', result.code)
+    }, (module) => {
+      assert(module.toString() !== 'baz')
+      assert(module.default === 'baz')
+      assert(module.foo === 'bar')
+    }))
 
-    var object = require('fixture')
-    assert(object.default === 'baz')
-    assert(object.foo === 'bar')
-  })
-
-  it('Add the `module.exports = Object.assign(exports.default,exports);` to EOF.', () => {
-    var result = babel.transform(fixture, {
+  it('Add the `module.exports = Object.assign(exports.default,exports);` to EOF.', () =>
+    testPlugin({
       presets: ['es2015'],
       plugins: ['../lib/index.js']
-    })
-    fsExtra.outputFileSync(fixturePath + '/index.js', result.code)
+    }, (module) => {
+      assert(module.toString() === 'baz') // need to invoke toString explicitly
+      assert(module.default === 'baz')
+      assert(module.foo === 'bar')
+    }))
 
-    var object = require('fixture')
-    assert(object.toString() === 'baz') // need to invoke toString explicitly
-    assert(object.default === 'baz')
-    assert(object.foo === 'bar')
-  })
-
-  it('issue#1', () => {
-    var result = babel.transform(fixture, {
+  it('issue#1', () =>
+    testPlugin({
       presets: ['es2015'],
       plugins: [
         '../lib/index.js',
         '../lib/index.js',
         '../lib/index.js'
       ]
-    })
-    fsExtra.outputFileSync(fixturePath + '/index.js', result.code)
-
-    var object = require('fixture')
-    assert(object.toString() === 'baz') // need to invoke toString explicitly
-    assert(object.default === 'baz')
-    assert(object.foo === 'bar')
-  })
+    }, (module) => {
+      assert(module.toString() === 'baz') // need to invoke toString explicitly
+      assert(module.default === 'baz')
+      assert(module.foo === 'bar')
+    }))
 })
