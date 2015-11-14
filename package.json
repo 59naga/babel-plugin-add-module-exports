@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "start": "mocha --bail --watch --require intelli-espower-loader",
-    "test": "istanbul cover _mocha --report text --report html --report lcov -- -R spec",
+    "test": "istanbul cover _mocha --report text --report html --report lcov -- -R spec --timeout 30000",
     "posttest": "npm run lint",
     "lint": "eslint lib test"
   },
@@ -20,19 +20,16 @@
   },
   "devDependencies": {
     "babel-core": "^6.1.2",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.1.3",
     "babel-preset-es2015": "^6.1.2",
     "eslint": "^1.9.0",
     "eslint-config-standard": "^4.4.0",
     "eslint-plugin-mocha": "^1.1.0",
     "eslint-plugin-standard": "^1.3.1",
     "espower-loader": "^1.0.0",
-    "fs-extra": "^0.26.2",
     "intelli-espower-loader": "^1.0.0",
     "istanbul": "^0.4.0",
     "mocha": "^2.3.3",
-    "power-assert": "^1.1.0",
-    "rimraf": "^2.4.3"
+    "power-assert": "^1.1.0"
   },
   "keywords": [
     "babel-plugin",
