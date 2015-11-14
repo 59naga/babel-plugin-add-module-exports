@@ -12,14 +12,14 @@ function createSandbox () {
   return sandbox
 }
 
-function testPlugin (options, fn) {
-  const fixture = `
-    let foo= 'bar'
-    export default 'baz'
-    export {foo}
-  `
+const fixture = `
+  let foo= 'bar'
+  export default 'baz'
+  export {foo}
+`
 
-  const result = babel.transform(fixture, options)
+function testPlugin (code, options, fn) {
+  const result = babel.transform(code, options)
   const sandbox = createSandbox()
 
   vm.runInNewContext(result.code, sandbox)
@@ -29,7 +29,7 @@ function testPlugin (options, fn) {
 
 describe('babel-plugin-add-module-exports', () => {
   it('should not export default to `module.exports` by default.', () =>
-    testPlugin({
+    testPlugin(fixture, {
       presets: ['es2015']
     }, (module) => {
       assert(module.toString() !== 'baz')
@@ -38,7 +38,7 @@ describe('babel-plugin-add-module-exports', () => {
     }))
 
   it('should export default to `module.exports` with this plugin', () =>
-    testPlugin({
+    testPlugin(fixture, {
       presets: ['es2015'],
       plugins: ['../lib/index.js']
     }, (module) => {
@@ -48,7 +48,7 @@ describe('babel-plugin-add-module-exports', () => {
     }))
 
   it('should handle duplicated plugin references (#1)', () =>
-    testPlugin({
+    testPlugin(fixture, {
       presets: ['es2015'],
       plugins: [
         '../lib/index.js',
