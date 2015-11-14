@@ -14,12 +14,6 @@ function createSandbox () {
   return sandbox
 }
 
-const fixture = `
-  let foo= 'bar'
-  export default 'baz'
-  export {foo}
-`
-
 function testPlugin (code, options, fn) {
   const result = babel.transform(code, options)
   const sandbox = createSandbox()
@@ -46,26 +40,15 @@ function equal (actual, expected) {
 
 describe('babel-plugin-add-module-exports', () => {
   it('should not export default to `module.exports` by default.', () =>
-    testPlugin(fixture, {
+    testPlugin(testCases[0].code, {
       presets: ['es2015']
     }, (module) => {
-      assert(module.toString() !== 'baz')
-      assert(module.default === 'baz')
-      assert(module.foo === 'bar')
+      assert(module.toString() !== 'default-entry')
+      assert(module.default === 'default-entry')
     }))
 
-  it.skip('should export default to `module.exports` with this plugin', () =>
-    testPlugin(fixture, {
-      presets: ['es2015'],
-      plugins: ['../lib/index.js']
-    }, (module) => {
-      assert(module.toString() === 'baz') // need to invoke toString explicitly
-      assert(module.default === 'baz')
-      assert(module.foo === 'bar')
-    }))
-
-  it.skip('should handle duplicated plugin references (#1)', () =>
-    testPlugin(fixture, {
+  it('should handle duplicated plugin references (#1)', () =>
+    testPlugin(testCases[0].code, {
       presets: ['es2015'],
       plugins: [
         '../lib/index.js',
@@ -73,9 +56,8 @@ describe('babel-plugin-add-module-exports', () => {
         '../lib/index.js'
       ]
     }, (module) => {
-      assert(module.toString() === 'baz') // need to invoke toString explicitly
-      assert(module.default === 'baz')
-      assert(module.foo === 'bar')
+      assert(module.toString() === 'default-entry') // need to invoke toString explicitly
+      assert(module.default === 'default-entry')
     }))
 
   testCases.forEach(testCase =>
