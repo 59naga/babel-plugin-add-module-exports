@@ -1,8 +1,5 @@
 # Quick boot options
 sudo: false
-cache:
-  directories:
-    - node_modules
 
 # Ignore version tags
 branches:
@@ -12,7 +9,11 @@ branches:
 # Language options
 language: node_js
 node_js:
-  - '4.1.2'
+  - '0.10'
+  - '0.12'
+  - 'iojs'
+  - 'node'
+
 before_install:
   - npm install npm@3 --global
 
@@ -32,3 +33,6 @@ deploy:
   email: i59naga@icloud.com
   api_key:
     secure: EuIsb55mziow6P8S+9X/BgWlMxy5LUKZUEQRqvoJRFnpR61hjIgO81JWm8MVZ0ajrC5zy9vyMQEnG0tVJlxxAYE4SpQPD8QLvXo2McUDwBtz0gwOf03j5SGovNEaBEnbUu9N7kYU+CtQXkKwIY1t9ioybS0tbFOLXnS1i4NDvF8aymTrl15GZUFvtVCcfftYRiZcZeXk9zh9KxkLOD2QwG52lzxOZ4n4sbnU09i89LsXZjf9HboOyPtMQxL4kMWRA5NGTEXG6zCP4JZu2iuaIQMuN5DM+nieT3RQAkgPEpHaQZGgo24lGNILdrrjEbMwFWgjaw6BdSit2+5RyuN0U3uzLJ6G8hx7NjT7WNjG8q8n5LTX4pqHHrn045trGuQZ7L7zbUSc5qDWEPrjEnK3tspIJBNbfloxRTCEv4mZR0FkYcEp6OtQV+fK3XKiRHYkIaXjVreEb+/1q3Hlj+lfrwH/vc9wAAhfuJh6MCykaTw4Imb4Eq8DtjDvcX+tzI9Kn96jjomqSU7ryKP1AcJ+ogTAA84iW0u8PJS96lS1yWXIBP04VO9N+OXywYIGggLw6qyRtA9um/cR2fYn09lm7phyyQKzCVGgjT9V8HoOSgEcYEUyVbyDDRodOUtXGRM5fvDFcpREQY8hTI+BZhjiphT6dNBVVcR5KcyRsGcXIGI=
+  on:
+    tags: true
+    node: 'node'
