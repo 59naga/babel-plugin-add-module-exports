@@ -8,7 +8,8 @@ function createSandbox () {
   const exports = {}
   const sandbox = {
     exports,
-    module: { exports }
+    module: { exports },
+    require: (path)=>{return path}
   }
 
   return sandbox
@@ -57,6 +58,18 @@ describe('babel-plugin-add-module-exports', () => {
       ]
     }, (module) => {
       assert(module === 'default-entry')
+      assert(module.default === undefined)
+    }))
+
+  it('should export using transform-export-extensions (#11)', () =>
+    testPlugin("export default from './lib'", {
+      presets: ['es2015'],
+      plugins: [
+        'transform-export-extensions',
+        '../lib/index.js'
+      ]
+    }, (module) => {
+      assert(module === 'lib')
       assert(module.default === undefined)
     }))
 
