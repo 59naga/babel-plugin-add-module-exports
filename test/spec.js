@@ -4,9 +4,7 @@ module.exports = [
     code: 'export default "default-entry"',
     expected: {
       module: 'default-entry',
-      exports: {
-        default: 'default-entry'
-      }
+      exports: 'default-entry'
     }
   },
   {
@@ -42,9 +40,7 @@ module.exports = [
     code: 'export default () => "default-entry"',
     expected: {
       module: () => 'default-entry',
-      exports: {
-        default: () => 'default-entry'
-      }
+      exports: () => 'default-entry'
     }
   },
   {
@@ -77,20 +73,17 @@ module.exports = [
   },
   {
     // even be compatible with wrong behavior: https://github.com/babel/babel/issues/2212#issuecomment-131110500
-    name: 'allow the wrong default export as like in Babel 5',
+    // name: 'allow the wrong default export as like in Babel 5',
+    name: 'follow the Babel@5 behavior (end of #4)',
     code: 'export default { name: "test", version: "0.0.1" }',
     expected: {
       module: {
         name: 'test',
-        version: '0.0.1',
-        default: { inspect: () => '[Circular]' }
+        version: '0.0.1'
       },
       exports: {
-        default: {
-          name: 'test',
-          version: '0.0.1',
-          default: { inspect: () => '[Circular]' }
-        }
+        name: 'test',
+        version: '0.0.1'
       }
     }
   }

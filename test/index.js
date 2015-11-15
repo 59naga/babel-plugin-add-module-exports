@@ -43,7 +43,7 @@ describe('babel-plugin-add-module-exports', () => {
     testPlugin(testCases[0].code, {
       presets: ['es2015']
     }, (module) => {
-      assert(module.toString() !== 'default-entry')
+      assert(module !== 'default-entry')
       assert(module.default === 'default-entry')
     }))
 
@@ -56,8 +56,8 @@ describe('babel-plugin-add-module-exports', () => {
         '../lib/index.js'
       ]
     }, (module) => {
-      assert(module.toString() === 'default-entry') // need to invoke toString explicitly
-      assert(module.default === 'default-entry')
+      assert(module === 'default-entry')
+      assert(module.default === undefined)
     }))
 
   testCases.forEach(testCase =>
