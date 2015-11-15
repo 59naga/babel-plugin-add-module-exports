@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-add-module-exports",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Fix babel/babel#2212",
   "engines": {
     "npm": "^3.3.9"
