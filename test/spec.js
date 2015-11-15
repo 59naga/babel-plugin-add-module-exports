@@ -86,5 +86,14 @@ module.exports = [
         version: '0.0.1'
       }
     }
+  },
+
+  {
+    name: 'export default using transform-export-extensions (#11)',
+    code: "export default from './fixtures/issue011.js'",
+    expected: {
+      module: 'this is file',
+      exports: 'this is file'
+    }
   }
 ]

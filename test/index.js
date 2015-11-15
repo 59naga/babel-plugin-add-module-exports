@@ -9,7 +9,10 @@ function createSandbox () {
   const sandbox = {
     exports,
     module: { exports },
-    require: (path)=>{return path}
+    require: (path) => {
+      delete require.cache[require.resolve(path)]
+      return require(path)
+    }
   }
 
   return sandbox
@@ -61,23 +64,14 @@ describe('babel-plugin-add-module-exports', () => {
       assert(module.default === undefined)
     }))
 
-  it('should export using transform-export-extensions (#11)', () =>
-    testPlugin("export default from './lib'", {
-      presets: ['es2015'],
-      plugins: [
-        'transform-export-extensions',
-        '../lib/index.js'
-      ]
-    }, (module) => {
-      assert(module === 'lib')
-      assert(module.default === undefined)
-    }))
-
   testCases.forEach(testCase =>
     it(`should ${testCase.name}`, () =>
       testPlugin(testCase.code, {
         presets: ['es2015'],
-        plugins: ['../lib/index.js']
+        plugins: [
+          'transform-export-extensions',
+          '../lib/index.js'
+        ]
       }, (module) => {
         // assert module root (module.exports) object
         equal(module, testCase.expected.module)

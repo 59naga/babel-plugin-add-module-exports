@@ -16,7 +16,8 @@
     "lint": "eslint lib test"
   },
   "dependencies": {
-    "babel-template": "^6.0.16"
+    "babel-template": "^6.0.16",
+    "lodash": "^3.10.1"
   },
   "devDependencies": {
     "babel-core": "^6.1.2",
