@@ -95,5 +95,61 @@ module.exports = [
       module: 'this is file',
       exports: 'this is file'
     }
+
+  },
+
+  {
+    name: 'export renamed default using export-from statement (#20)',
+    code: `
+      export { default as en } from './fixtures/issue012_en'
+      export { default as es } from './fixtures/issue012_es'
+      export { default as it } from './fixtures/issue012_it'
+    `,
+    expected: {
+      module: {
+        en: 'en',
+        es: 'es',
+        it: 'it'
+      },
+      exports: {
+        en: 'en',
+        es: 'es',
+        it: 'it'
+      }
+    }
+  },
+  {
+    name: 'export renamed variable',
+    code: `
+      let foo = 'bar'
+      export { foo as baz }
+    `,
+    expected: {
+      module: {
+        baz: 'bar'
+      },
+      exports: {
+        baz: 'bar'
+      }
+    }
+  },
+  {
+    name: 'export renamed object',
+    code: `
+      const Foo = {bar:'baz'}
+      export { Foo as beep }
+    `,
+    expected: {
+      module: {
+        beep: {
+          bar: 'baz'
+        }
+      },
+      exports: {
+        beep: {
+          bar: 'baz'
+        }
+      }
+    }
   }
 ]
