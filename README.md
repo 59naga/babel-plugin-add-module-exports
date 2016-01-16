@@ -26,51 +26,44 @@ npm install babel-plugin-add-module-exports --save-dev
 Why?
 ---
 
-[babel-plugin-transform-es2015-modules-commonjs@6.1.4](https://www.npmjs.com/package/babel-plugin-transform-es2015-modules-commonjs) doesn't support the `module.exports`.
+Babel@6 doesn't export default `module.exports` any more - [T2212 *Kill CommonJS default export behavior*](https://phabricator.babeljs.io/T2212).
 
-> [Kill CommonJS default export behaviour - babel/babel#2212](https://phabricator.babeljs.io/T2212)
+Babel@6 transforms the following file
 
 ```js
 // index.js
 export default 'foo'
 ```
 
-```bash
-npm install babel-cli --global
-npm install babel-preset-es2015 --save-dev
-npm install babel-plugin-transform-es2015-modules-commonjs@6.1.4 --save-dev
+into
 
-babel index.js --presets es2015 --plugins transform-es2015-modules-commonjs > bundle.js
-# 'use strict';
-#
-# Object.defineProperty(exports, "__esModule", {
-#   value: true
-# });
-# exports.default = 'foo';
+```js
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = 'foo';
 ```
 
-Therefore, need to use the `.default` at NodeJS.
+Therefore, it is a need to use the ugly `.default` in node.js.
 
 ```js
 require('./bundle.js') // { default: 'foo' }
 require('./bundle.js').default // 'foo'
 ```
 
-This plugin add the `module.exports` if **only** the `export default` declaration exists.
+This plugin follows the babel@5 behavior - add the `module.exports` if **only** the `export default` declaration exists.
 
-```bash
-npm install babel-plugin-add-module-exports --save-dev
-babel index.js --presets es2015 --plugins add-module-exports > bundle.js
-# 'use strict';
-#
-# Object.defineProperty(exports, "__esModule", {
-#   value: true
-# });
-# exports.default = 'foo';
-# module.exports = exports['default'];
+```js
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = 'foo';
+module.exports = exports['default'];
 ```
 
-Therefore, `.default` is the unnecessary.
+Therefore, our old codes still work fine - the `.default` goes away. :wink:
 
 ```js
 require('./bundle.js') // foo
