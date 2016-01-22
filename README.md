@@ -69,6 +69,38 @@ Therefore, our old codes still work fine - the `.default` goes away. :wink:
 require('./bundle.js') // foo
 ```
 
+Usage
+---
+
+Install this plugin from npm:
+
+```sh
+npm install babel-plugin-add-module-exports --save-dev
+```
+
+Write the name to [babelrc](https://babeljs.io/docs/usage/babelrc/). It works with [preset-es2015](http://babeljs.io/docs/plugins/preset-es2015/) to output CommonJS code:
+
+```json
+{
+  "presets": ["es2015"],
+  "plugins": [
+    "add-module-exports"
+  ]
+}
+```
+
+It also works with [transform-es2015-modules-umd](http://babeljs.io/docs/plugins/transform-es2015-modules-umd/) plugin to output UMD code: (It is a *must* to place UMD plugin *after* this plugin.)
+
+```json
+{
+  "presets": ["es2015"],
+  "plugins": [
+    "add-module-exports",
+    "transform-es2015-modules-umd"
+  ]
+}
+```
+
 License
 ---
 [MIT](http://59naga.mit-license.org/)
