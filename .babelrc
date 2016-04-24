@@ -1,0 +1,13 @@
+{
+  "presets": [
+    "es2015"
+  ],
+  "env": {
+    "development": {
+      "sourceMap": "inline",
+      "presets": [
+        "power-assert"
+      ]
+    }
+  }
+}

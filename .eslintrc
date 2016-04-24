@@ -2,7 +2,8 @@
 plugins:
   - mocha
 
-extends: standard
+extends:
+  - standard
 
 env:
   node: true

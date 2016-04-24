@@ -39,8 +39,12 @@ module.exports = [
     name: 'export a function as default entry',
     code: 'export default () => "default-entry"',
     expected: {
-      module: () => 'default-entry',
-      exports: () => 'default-entry'
+      module: function () {
+        return 'default-entry'
+      },
+      exports: function () {
+        return 'default-entry'
+      }
     }
   },
   {
@@ -48,11 +52,15 @@ module.exports = [
     code: 'export default () => "default-entry"; export const other = "other-entry"',
     expected: {
       module: {
-        default: () => 'default-entry',
+        default: function () {
+          return 'default-entry'
+        },
         other: 'other-entry'
       },
       exports: {
-        default: () => 'default-entry',
+        default: function () {
+          return 'default-entry'
+        },
         other: 'other-entry'
       }
     }
