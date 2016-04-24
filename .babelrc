@@ -4,6 +4,7 @@
   ],
   "env": {
     "development": {
+      "sourceMap": "inline",
       "presets": [
         "power-assert"
       ]
