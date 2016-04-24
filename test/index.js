@@ -1,50 +1,10 @@
-var vm = require('vm')
-var util = require('util')
-var babel = require('babel-core')
-var assert = require('power-assert')
-var testCases = require('./spec')
-
-function createSandbox () {
-  const exports = {}
-  const sandbox = {
-    exports,
-    module: { exports },
-    require: (path) => {
-      delete require.cache[require.resolve(path)]
-      return require(path)
-    }
-  }
-
-  return sandbox
-}
-
-function testPlugin (code, options, fn) {
-  const result = babel.transform(code, options)
-  const sandbox = createSandbox()
-
-  vm.runInNewContext(result.code, sandbox)
-
-  fn(sandbox.module.exports)
-}
-
-function inspect (object) {
-  const result = util.inspect(object)
-  return result.replace('Object {', '{') // HACK the module.export inspect
-}
-
-function equal (actual, expected) {
-  if (typeof expected === 'string') {
-    assert(actual.toString() === expected)
-  } else if (typeof expected === 'function') {
-    assert(actual() === expected())
-  } else {
-    assert(inspect(actual) === inspect(expected))
-  }
-}
+import assert from 'assert'
+import * as heplers from './helpers'
+import testCases from './spec'
 
 describe('babel-plugin-add-module-exports', () => {
   it('should not export default to `module.exports` by default.', () =>
-    testPlugin(testCases[0].code, {
+    heplers.testPlugin(testCases[0].code, {
       presets: ['es2015']
     }, (module) => {
       assert(module !== 'default-entry')
@@ -52,32 +12,38 @@ describe('babel-plugin-add-module-exports', () => {
     }))
 
   it('should handle duplicated plugin references (#1)', () =>
-    testPlugin(testCases[0].code, {
+    heplers.testPlugin(testCases[0].code, {
       presets: ['es2015'],
       plugins: [
-        '../lib/index.js',
-        '../lib/index.js',
-        '../lib/index.js'
+        './lib/index.js',
+        './lib/index.js',
+        './lib/index.js'
       ]
     }, (module) => {
       assert(module === 'default-entry')
+
+      // @see https://github.com/59naga/babel-plugin-add-module-exports/issues/12#issuecomment-157023722
       assert(module.default === undefined)
     }))
 
-  testCases.forEach(testCase =>
+  testCases.forEach((testCase) =>
     it(`should ${testCase.name}`, () =>
-      testPlugin(testCase.code, {
+      heplers.testPlugin(testCase.code, {
         presets: ['es2015'],
         plugins: [
-          'transform-export-extensions',
-          '../lib/index.js'
+          'transform-export-extensions', // use export-from syntax
+          './lib/index.js'
         ]
       }, (module) => {
         // assert module root (module.exports) object
-        equal(module, testCase.expected.module)
+        heplers.equal(module, testCase.expected.module)
+
+        if (typeof testCase.expected.exports !== 'object') {
+          return // avoid "Object.keys called on non-object" in node-v0
+        }
 
         // assert each common entry is exported without error
-        Object.keys(testCase.expected.exports).forEach(key =>
-          equal(module[key], testCase.expected.exports[key]))
+        Object.keys(testCase.expected.exports).forEach((key) =>
+          heplers.equal(module[key], testCase.expected.exports[key]))
       })))
 })

@@ -8,26 +8,28 @@ branches:
 
 # Language options
 language: node_js
+before_install:
+  - if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
 node_js:
   - '0'
   - 4
   - 5
+before_script:
+  - npm prune
+script:
+  - npm run cover
+  - npm run lint
 
-before_install:
-  - npm install npm@3 --global
-
-# Coverage report
-after_success:
-  - export TRAVIS_PASSED=true
-  - npm install codeclimate-test-reporter --global
-  - codeclimate-test-reporter < coverage/lcov.info
 env:
   global:
     # CODECLIMATE_REPO_TOKEN
     - secure: BfmL4mRysi4/qUKuN9Hvx3QsbTRH6XtxfuXj3XXaIQiRNwYAU0FBiVjoJzzKk1AhXmLBzWco3jWFWGY0OpXCnzKLHYYZYB3L/UPGq5aqX004pk2ZaPFO8+nfdua15FP2/7vShB+4FbMTztQO4GZMdOi1QTXOdTJgjISQfIqZ7RIeWEaF3UlySt0Xety9Y2nN3YpdPUIPJW2TWP9dIA/XyMHa9knve7TdPzpXkJelpoi3+EnzEtEUWaPtDTMXwOq4zYM4E1bXeA5ZWPmbA1JlO4lDX1aeOz6MFTmBaPTt8K/TT2PLegh8u6JVyG45R1y8OTKyRPQR4+Dy5vp+NLlSMSugq2lxixcK4tuf17a7zPAAEQLNg7LSR9kg3/gyqjthXa5gMYEVI7kE0+mrJl5stVnkGCJaIBawxr4Miqot6qOkh3JSrv0YKh4q1f+XMgtJFlW4UhtJ5zqp/wRSaQpsWKmGqN6xPRMR//5vrTis7uFuCOvxsAN0wzmjelXuNc2nWLuZsP9A91sTghssdikm9maaiP+keAc4gMxy/GuNf0fqyylcaw+9cY9E4Fsg+0Qlv2p1TPOAmXdr0VIkVAuym8cQr+ULu9w4H1F2YrScYnwThTv9J9jhZXqmVh7Ysh9pTluZoTd9ymgkso0Av5xHN56ltHWF1Sku4FFGmnUdI+Q=
 
 # Npm publish options
+before_deploy:
+  - npm run build
 deploy:
+  skip_cleanup: true # keep the devDependencies
   provider: npm
   email: i59naga@icloud.com
   api_key:
