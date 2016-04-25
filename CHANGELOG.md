@@ -1,3 +1,6 @@
+
+0.1.3
+---
  - [2016-04-26 04:10:55](https://github.com/59naga/babel-plugin-add-module-exports/commit/29b883ae0f99ef5ce9b58220900103c1edc1d5d0) Add changelog.js for CHANGELOG.md [skip ci] by 59naga
  - [2016-04-26 02:34:43](https://github.com/59naga/babel-plugin-add-module-exports/commit/0303039c4d429245db2d6e9eacc2d4a9a8d365fa) Fix [#30](https://github.com/59naga/babel-plugin-add-module-exports/issues/30) by 59naga
  - [2016-04-24 12:08:41](https://github.com/59naga/babel-plugin-add-module-exports/commit/af192976a03242833a811167931a2f8a0c12dcff) Add .npmignore for `npm publish` by 59naga
@@ -7,7 +10,7 @@
  - [2016-04-24 08:18:24](https://github.com/59naga/babel-plugin-add-module-exports/commit/dbe1107fc7b35e268eab836c5fdab98a870336b7) Add node@0 in TravisCI by 59naga
  - [2016-04-24 08:17:24](https://github.com/59naga/babel-plugin-add-module-exports/commit/7fa8dcc3078d7cc6acfafc7bdc2860f9af2c361c) Rename lib/index.js -> src/index.js by 59naga
  - [2016-04-24 08:15:12](https://github.com/59naga/babel-plugin-add-module-exports/commit/b684ec0269fa532ee7c4ae117307d9ab682f01d5) Update the devDependencies by 59naga
- - [2016-02-10 00:50:54](https://github.com/59naga/babel-plugin-add-module-exports/commit/9e697076ed72836bde21419b24da072c5fd1a622) Update deps and devDeps(refs [#25](https://github.com/59naga/babel-plugin-add-module-exports/issues/25),#24) by 59naga
+ - [2016-02-10 00:50:54](https://github.com/59naga/babel-plugin-add-module-exports/commit/9e697076ed72836bde21419b24da072c5fd1a622) Update deps and devDeps(refs [#25](https://github.com/59naga/babel-plugin-add-module-exports/issues/25),[#24](https://github.com/59naga/babel-plugin-add-module-exports/issues/24)) by 59naga
  - [2016-01-23 08:12:31](https://github.com/59naga/babel-plugin-add-module-exports/commit/c7665bcfca8de39cdcc26bdec93ee9f6f757ef28) Merge pull request [#23](https://github.com/59naga/babel-plugin-add-module-exports/issues/23) from lijunle/readme-usage by 59naga
  - [2016-01-22 23:44:40](https://github.com/59naga/babel-plugin-add-module-exports/commit/6cd4a8f0d0792b6f834a00f11efc579c50a57f2f) Add the usage section in README. by Junle Li
  - [2016-01-22 01:31:00](https://github.com/59naga/babel-plugin-add-module-exports/commit/0cbd7e6c68f28cbc34c1a5f9d530028105138a28) Revert "0.1.3-alpha Follow the [#20](https://github.com/59naga/babel-plugin-add-module-exports/issues/20)" by 59naga

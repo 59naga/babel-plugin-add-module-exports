@@ -17,7 +17,7 @@ exec('git log --pretty=format:"%b"', (error, stdout, stderr) => {
   const strs = stdout.match(new RegExp(pattern, 'g')) || []
   const reverts = strs.map((str) => (str.match(new RegExp(pattern)))[1])
 
-  const script = 'git log --pretty=format:"[%ad] %H %an : %s"'
+  const script = 'git log --pretty=format:"[%ad] %H %an : %s" --decorate=full'
   exec(script, (error, stdout, stderr) => {
     if (error) {
       console.error(error)
@@ -56,7 +56,7 @@ exec('git log --pretty=format:"%b"', (error, stdout, stderr) => {
         if (i % 2 === 1) {
           return chunk // ignore if code-block
         }
-        return chunk.replace(/#([\d]+)/, (str, issueNumber) => {
+        return chunk.replace(/#([\d]+)/g, (str, issueNumber) => {
           return `[${str}](${issueUrlBase}${issueNumber})`
         })
       }).join('`')
