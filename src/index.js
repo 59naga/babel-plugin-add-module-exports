@@ -18,8 +18,9 @@ export default {
           }
           if (path.isExportNamedDeclaration()) {
             // HACK detect export-from statements for default
-            const name = _get(path.get('declaration'), 'container.specifiers[0].exported.name')
-            if (name === 'default') {
+            const specifiers = _get(path.get('declaration'), 'container.specifiers')
+            const isDefaultExportDeclaration = specifiers.length === 1 && specifiers[0].exported.name === 'default'
+            if (isDefaultExportDeclaration) {
               hasExportDefault = true
             } else {
               hasExportNamed = true

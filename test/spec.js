@@ -95,13 +95,26 @@ module.exports = [
       }
     }
   },
-
   {
     name: 'export default using transform-export-extensions (#11)',
     code: "export default from './fixtures/issue011.js'",
     expected: {
       module: 'this is file',
       exports: 'this is file'
+    }
+  },
+  {
+    name: 'export default and named declarations (#30)',
+    code: 'const foo = 1;const BAR = 2;export { foo as default, BAR }',
+    expected: {
+      module: {
+        default: 1,
+        BAR: 2
+      },
+      exports: {
+        default: 1,
+        BAR: 2
+      }
     }
   }
 ]
