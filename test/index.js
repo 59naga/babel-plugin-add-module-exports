@@ -11,6 +11,12 @@ describe('babel-plugin-add-module-exports', () => {
       assert(module.default === 'default-entry')
     }))
 
+  it('plugin should export to module.exports(#31)', () => {
+    const plugin = require('../lib')
+    assert(typeof plugin === 'object')
+    assert(typeof plugin.visitor === 'object')
+  })
+
   it('should handle duplicated plugin references (#1)', () =>
     heplers.testPlugin(testCases[0].code, {
       presets: ['es2015'],

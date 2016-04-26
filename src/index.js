@@ -1,6 +1,6 @@
 import babelTemplate from 'babel-template'
 
-export default {
+module.exports = {
   visitor: {
     Program: {
       exit (path) {
