@@ -23,8 +23,7 @@
     "cover:test": "nyc --reporter=lcov --reporter=text npm test",
     "cover:report": "npm-if TRAVIS \"codeclimate-test-reporter < coverage/lcov.info\"",
     "lint": "eslint src test",
-    "version": "node changelog.js > CHANGELOG.md && git add CHANGELOG.md",
-    "postversion": "git push --follow-tags",
+    "postversion": "node changelog.js > CHANGELOG.md && git add CHANGELOG.md && echo ':wq' | git commit --amend && git push --follow-tags",
     "build": "abby compile --log --env"
   },
   "nyc": {
@@ -40,8 +39,7 @@
     }
   },
   "dependencies": {
-    "babel-template": "^6.5.0",
-    "lodash.get": "^4.2.1"
+    "babel-template": "^6.5.0"
   },
   "devDependencies": {
     "abigail": "^1.6.1",

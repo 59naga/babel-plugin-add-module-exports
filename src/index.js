@@ -1,7 +1,6 @@
 import babelTemplate from 'babel-template'
-import _get from 'lodash.get'
 
-export default {
+module.exports = {
   visitor: {
     Program: {
       exit (path) {
@@ -18,7 +17,7 @@ export default {
           }
           if (path.isExportNamedDeclaration()) {
             // HACK detect export-from statements for default
-            const specifiers = _get(path.get('declaration'), 'container.specifiers')
+            const specifiers = path.get('declaration').container.specifiers
             const isDefaultExportDeclaration = specifiers.length === 1 && specifiers[0].exported.name === 'default'
             if (isDefaultExportDeclaration) {
               hasExportDefault = true
