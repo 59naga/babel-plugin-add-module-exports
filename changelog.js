@@ -17,7 +17,7 @@ exec('git log --pretty=format:"%b"', (error, stdout, stderr) => {
   const strs = stdout.match(new RegExp(pattern, 'g')) || []
   const reverts = strs.map((str) => (str.match(new RegExp(pattern)))[1])
 
-  const script = 'git log --pretty=format:"[%ad] %H %an : %s" --decorate=full'
+  const script = 'git log --pretty=format:"[%ai] %H %an : %s" --decorate=full'
   exec(script, (error, stdout, stderr) => {
     if (error) {
       console.error(error)
@@ -27,7 +27,7 @@ exec('git log --pretty=format:"%b"', (error, stdout, stderr) => {
     const logs = []
     stdout.split('\n').forEach((line) => {
       const matches = line.match(/^\[(.+?)\] (\w+) (.+?) : (.+?)$/)
-      const date = new Date(matches[1]).toLocaleString()
+      const date = matches[1]
       const hash = matches[2]
       const commiter = matches[3]
       const subject = matches[4] || ''
