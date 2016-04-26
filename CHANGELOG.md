@@ -1,4 +1,12 @@
 
+0.1.4
+---
+ - [2016-04-27 02:11:44](https://github.com/59naga/babel-plugin-add-module-exports/commit/8c39825bd2e360463179a428951fd1061d7f106a) Merge pull request [#33](https://github.com/59naga/babel-plugin-add-module-exports/issues/33) from 59naga/patch-1 by 59naga
+ - [2016-04-27 01:35:24](https://github.com/59naga/babel-plugin-add-module-exports/commit/ae8b254037dc3b839cf110711afe6c3c189c211e) chore: tweaks version/postversion by 59naga
+ - [2016-04-27 01:12:25](https://github.com/59naga/babel-plugin-add-module-exports/commit/8471534665bf90e2bdb43cb028912cbd5383c5f7) Fix [#31](https://github.com/59naga/babel-plugin-add-module-exports/issues/31) by 59naga
+ - [2016-04-27 00:48:48](https://github.com/59naga/babel-plugin-add-module-exports/commit/83d975c4581b35816e303c6c5de4221147b43543) Remove unnecessary `lodash.get` by 59naga
+ - [2016-04-26 04:18:39](https://github.com/59naga/babel-plugin-add-module-exports/commit/50253c83cd117ebe1218d2e94e9e69729cf8fde1) Tweaks changelog.js/CHANGELOG.md [skip ci] by 59naga
+
 0.1.3
 ---
  - [2016-04-26 04:10:55](https://github.com/59naga/babel-plugin-add-module-exports/commit/29b883ae0f99ef5ce9b58220900103c1edc1d5d0) Add changelog.js for CHANGELOG.md [skip ci] by 59naga
