@@ -38,9 +38,6 @@
       "watch": false
     }
   },
-  "dependencies": {
-    "babel-template": "^6.5.0"
-  },
   "devDependencies": {
     "abigail": "^1.6.1",
     "babel-cli": "^6.5.1",

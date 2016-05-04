@@ -1,6 +1,4 @@
-import babelTemplate from 'babel-template'
-
-module.exports = {
+module.exports = ({template}) => ({
   visitor: {
     Program: {
       exit (path) {
@@ -30,7 +28,7 @@ module.exports = {
 
         if (hasExportDefault && !hasExportNamed) {
           const topNodes = []
-          topNodes.push(babelTemplate("module.exports = exports['default']")())
+          topNodes.push(template("module.exports = exports['default']")())
 
           path.pushContainer('body', topNodes)
         }
@@ -39,4 +37,4 @@ module.exports = {
       }
     }
   }
-}
+})

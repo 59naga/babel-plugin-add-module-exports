@@ -13,8 +13,7 @@ describe('babel-plugin-add-module-exports', () => {
 
   it('plugin should export to module.exports(#31)', () => {
     const plugin = require('../lib')
-    assert(typeof plugin === 'object')
-    assert(typeof plugin.visitor === 'object')
+    assert(typeof plugin === 'function')
   })
 
   it('should handle duplicated plugin references (#1)', () =>
