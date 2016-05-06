@@ -1,4 +1,10 @@
 
+0.2.0
+---
+ - [2016-05-05 01:40:16 +0900](https://github.com/59naga/babel-plugin-add-module-exports/commit/a07c2747e59b04cd0b0a4862f903e617b5a7612e) perf: use `template` argument property instead of `babel-template` by 59naga
+ - [2016-04-27 08:01:52 +0900](https://github.com/59naga/babel-plugin-add-module-exports/commit/d1922e66cef0f1ad16b4e00829e7b379015af747) Add node-v6 in TravisCI :tada: by 59naga
+ - [2016-04-27 04:59:25 +0900](https://github.com/59naga/babel-plugin-add-module-exports/commit/fe69568dbbd03d7ac93d52eb8b495d2a5a624417) docs(CHANGELOG): change date format to ISO 8601 [skip ci] by 59naga
+
 0.1.4
 ---
  - [2016-04-27 02:11:44 +0900](https://github.com/59naga/babel-plugin-add-module-exports/commit/8c39825bd2e360463179a428951fd1061d7f106a) Merge pull request [#33](https://github.com/59naga/babel-plugin-add-module-exports/issues/33) from 59naga/patch-1 by 59naga
