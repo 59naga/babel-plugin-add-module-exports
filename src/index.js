@@ -1,4 +1,4 @@
-module.exports = ({template}) => ({
+module.exports = ({types}) => ({
   visitor: {
     Program: {
       exit (path) {
@@ -13,11 +13,9 @@ module.exports = ({template}) => ({
             hasExportDefault = true
             return
           }
+
           if (path.isExportNamedDeclaration()) {
-            // HACK detect export-from statements for default
-            const specifiers = path.get('declaration').container.specifiers
-            const isDefaultExportDeclaration = specifiers.length === 1 && specifiers[0].exported.name === 'default'
-            if (isDefaultExportDeclaration) {
+            if (path.node.specifiers.length === 1 && path.node.specifiers[0].exported.name === 'default') {
               hasExportDefault = true
             } else {
               hasExportNamed = true
@@ -27,10 +25,13 @@ module.exports = ({template}) => ({
         })
 
         if (hasExportDefault && !hasExportNamed) {
-          const topNodes = []
-          topNodes.push(template("module.exports = exports['default']")())
-
-          path.pushContainer('body', topNodes)
+          path.pushContainer('body', [
+            types.expressionStatement(types.assignmentExpression(
+              '=',
+              types.memberExpression(types.identifier('module'), types.identifier('exports')),
+              types.memberExpression(types.identifier('exports'), types.stringLiteral('default'), true)
+            ))
+          ])
         }
 
         path.BABEL_PLUGIN_ADD_MODULE_EXPORTS = true
