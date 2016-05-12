@@ -31,6 +31,17 @@ describe('babel-plugin-add-module-exports', () => {
       assert(module.default === undefined)
     }))
 
+  it('should export with `babel-plugin-rewire` (#19)', () =>
+      heplers.testPlugin("export default { stuff: 'things' }", {
+        presets: ['react', 'es2015'],
+        plugins: [
+          './lib/index.js',
+          'rewire'
+        ]
+      }, (module) => {
+        assert(module.stuff === 'things')
+      }))
+
   testCases.forEach((testCase) =>
     it(`should ${testCase.name}`, () =>
       heplers.testPlugin(testCase.code, {
