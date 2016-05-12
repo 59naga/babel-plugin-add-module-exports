@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-add-module-exports",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Fix babel/babel#2212",
   "main": "lib",
   "files": [

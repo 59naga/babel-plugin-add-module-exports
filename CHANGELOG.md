@@ -1,4 +1,8 @@
 
+0.2.1
+---
+ - [2016-05-12 16:20:17 +0900](https://github.com/59naga/babel-plugin-add-module-exports/commit/77cc52a366e237e22bae8a84abab1d7b13cb1078) perf: use babel/scripts/add-module-exports as reference implementation([#34](https://github.com/59naga/babel-plugin-add-module-exports/issues/34)) by 59naga
+
 0.2.0
 ---
  - [2016-05-05 01:40:16 +0900](https://github.com/59naga/babel-plugin-add-module-exports/commit/a07c2747e59b04cd0b0a4862f903e617b5a7612e) perf: use `template` argument property instead of `babel-template` by 59naga
