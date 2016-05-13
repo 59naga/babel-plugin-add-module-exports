@@ -7,34 +7,19 @@
     "lib"
   ],
   "scripts": {
-    "start": "abby compile, watch:*",
-    "watch:src": "babel src --out-dir lib --watch",
-    "watch:test": "babel test --out-dir spec --ignore test/spec.js --watch",
-    "watch:copy": "abby compile:copy --watch test/spec.js",
-    "watch:mocha": "abby mocha --log --watch lib/**/*.js,spec/**/*.js",
-    "compile": "abby compile:* --parse serial",
-    "compile:version": "babel -V",
-    "compile:src": "babel src --out-dir lib --source-maps",
-    "compile:test": "babel test --out-dir spec --ignore test/spec.js",
-    "compile:copy": "cp test/spec.js spec/spec.js",
-    "test": "abby compile, mocha.",
-    "mocha": "mocha spec/index.js",
-    "cover": "abby cover:* --parse serial --launch force",
+    "start": "mocha --require babel-register --watch",
+    "test": "mocha --require babel-register",
+    "cover": "abby cover:* --parse serial",
     "cover:test": "nyc --reporter=lcov --reporter=text npm test",
     "cover:report": "npm-if TRAVIS \"codeclimate-test-reporter < coverage/lcov.info\"",
     "lint": "eslint src test",
     "postversion": "node changelog.js > CHANGELOG.md && git add CHANGELOG.md && echo ':wq' | git commit --amend && git push --follow-tags",
-    "build": "abby compile --log --env"
-  },
-  "nyc": {
-    "exclude": [
-      "spec"
-    ]
+    "build": "babel src --out-dir lib --source-maps"
   },
   "abigail": {
     "plugins": {
-      "log": false,
       "parse": "raw",
+      "launch": "force",
       "watch": false
     }
   },

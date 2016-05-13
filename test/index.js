@@ -12,7 +12,7 @@ describe('babel-plugin-add-module-exports', () => {
     }))
 
   it('plugin should export to module.exports(#31)', () => {
-    const plugin = require('../lib')
+    const plugin = require('../src')
     assert(typeof plugin === 'function')
   })
 
@@ -20,9 +20,9 @@ describe('babel-plugin-add-module-exports', () => {
     heplers.testPlugin(testCases[0].code, {
       presets: ['es2015'],
       plugins: [
-        './lib/index.js',
-        './lib/index.js',
-        './lib/index.js'
+        './src/index.js',
+        './src/index.js',
+        './src/index.js'
       ]
     }, (module) => {
       assert(module === 'default-entry')
@@ -35,7 +35,7 @@ describe('babel-plugin-add-module-exports', () => {
       heplers.testPlugin("export default { stuff: 'things' }", {
         presets: ['react', 'es2015'],
         plugins: [
-          './lib/index.js',
+          './src/index.js',
           'rewire'
         ]
       }, (module) => {
@@ -48,7 +48,7 @@ describe('babel-plugin-add-module-exports', () => {
         presets: ['es2015'],
         plugins: [
           'transform-export-extensions', // use export-from syntax
-          './lib/index.js'
+          './src/index.js'
         ]
       }, (module) => {
         // assert module root (module.exports) object
