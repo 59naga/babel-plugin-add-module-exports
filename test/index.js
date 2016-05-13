@@ -54,10 +54,6 @@ describe('babel-plugin-add-module-exports', () => {
         // assert module root (module.exports) object
         equal(module, testCase.expected.module)
 
-        if (typeof testCase.expected.exports !== 'object') {
-          return // avoid "Object.keys called on non-object" in node-v0
-        }
-
         // assert each common entry is exported without error
         Object.keys(testCase.expected.exports).forEach((key) =>
           equal(module[key], testCase.expected.exports[key]))
