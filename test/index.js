@@ -1,10 +1,10 @@
 import assert from 'assert'
-import * as heplers from './helpers'
+import { testPlugin, equal } from './helpers'
 import testCases from './spec'
 
 describe('babel-plugin-add-module-exports', () => {
   it('should not export default to `module.exports` by default.', () =>
-    heplers.testPlugin(testCases[0].code, {
+    testPlugin(testCases[0].code, {
       presets: ['es2015']
     }, (module) => {
       assert(module !== 'default-entry')
@@ -17,7 +17,7 @@ describe('babel-plugin-add-module-exports', () => {
   })
 
   it('should handle duplicated plugin references (#1)', () =>
-    heplers.testPlugin(testCases[0].code, {
+    testPlugin(testCases[0].code, {
       presets: ['es2015'],
       plugins: [
         './src/index.js',
@@ -32,7 +32,7 @@ describe('babel-plugin-add-module-exports', () => {
     }))
 
   it('should export with `babel-plugin-rewire` (#19)', () =>
-      heplers.testPlugin("export default { stuff: 'things' }", {
+      testPlugin("export default { stuff: 'things' }", {
         presets: ['react', 'es2015'],
         plugins: [
           './src/index.js',
@@ -44,7 +44,7 @@ describe('babel-plugin-add-module-exports', () => {
 
   testCases.forEach((testCase) =>
     it(`should ${testCase.name}`, () =>
-      heplers.testPlugin(testCase.code, {
+      testPlugin(testCase.code, {
         presets: ['es2015'],
         plugins: [
           'transform-export-extensions', // use export-from syntax
@@ -52,7 +52,7 @@ describe('babel-plugin-add-module-exports', () => {
         ]
       }, (module) => {
         // assert module root (module.exports) object
-        heplers.equal(module, testCase.expected.module)
+        equal(module, testCase.expected.module)
 
         if (typeof testCase.expected.exports !== 'object') {
           return // avoid "Object.keys called on non-object" in node-v0
@@ -60,6 +60,6 @@ describe('babel-plugin-add-module-exports', () => {
 
         // assert each common entry is exported without error
         Object.keys(testCase.expected.exports).forEach((key) =>
-          heplers.equal(module[key], testCase.expected.exports[key]))
+          equal(module[key], testCase.expected.exports[key]))
       })))
 })
