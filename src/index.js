@@ -22,6 +22,22 @@ module.exports = ({types}) => ({
             }
             return
           }
+
+          if (path.isExpressionStatement()) {
+            const notExportExpression = path.node.expression.left.object === undefined || path.node.expression.left.object.name !== 'exports'
+            if (notExportExpression) {
+              return
+            }
+
+            const propertyName = path.node.expression.left.property.value || path.node.expression.left.property.name
+            if (propertyName === '__esModule') {
+              return
+            } else if (propertyName === 'default') {
+              hasExportDefault = true
+            } else {
+              hasExportNamed = true
+            }
+          }
         })
 
         if (hasExportDefault && !hasExportNamed) {

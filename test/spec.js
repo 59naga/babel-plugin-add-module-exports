@@ -113,5 +113,40 @@ module.exports = [
         BAR: 2
       }
     }
+  },
+  {
+    name: 'export a function as default entry via typescript (#35)',
+    code: `
+      exports.__esModule = true;
+      exports["default"] = function () { return 'default-entry' }
+
+      var fake
+      fake = {}
+      fake.foo = true
+    `,
+    expected: {
+      module: defaultEntry,
+      exports: defaultEntry
+    }
+  },
+  {
+    name: 'not export default to module.exports if export multiple entries via typescript',
+    code: `
+      exports.__esModule = true;
+      exports["default"] = function () { return 'default-entry' }
+      exports.other = 'other-entry'
+    `,
+    expected: {
+      module: {
+        __esModule: true,
+        default: defaultEntry,
+        other: 'other-entry'
+      },
+      exports: {
+        __esModule: true,
+        default: defaultEntry,
+        other: 'other-entry'
+      }
+    }
   }
 ]
