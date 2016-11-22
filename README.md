@@ -1,6 +1,8 @@
 babel-plugin-add-module-exports
 ---
 
+[![Join the chat at https://gitter.im/59naga/babel-plugin-add-module-exports](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/59naga/babel-plugin-add-module-exports?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 <p align="right">
   <a href="https://npmjs.org/package/babel-plugin-add-module-exports">
     <img src="https://img.shields.io/npm/v/babel-plugin-add-module-exports.svg?style=flat-square">
