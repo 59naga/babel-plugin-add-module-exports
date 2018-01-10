@@ -36,6 +36,16 @@ export function equal (actual, expected) {
     assert(actual.toString() === expected)
   } else if (typeof expected === 'function') {
     assert(actual() === expected())
+  } else if (Array.isArray(expected)) {
+    assert(actual.length === expected.length)
+    for (const key in expected) {
+      equal(actual[key], expected[key])
+    }
+  } else if (typeof expected === 'object') {
+    equal(Object.keys(actual), Object.keys(expected))
+    for (const prop in expected) {
+      equal(actual[prop], expected[prop])
+    }
   } else {
     assert(inspect(actual) === inspect(expected))
   }

@@ -1,8 +1,3 @@
-// HACK: keep `anonymous` function for helpers/inspect
-let defaultEntry
-// eslint-disable-next-line no-eval
-eval("defaultEntry = function () { return 'default-entry' }")
-
 module.exports = [
   {
     name: 'export default to module.exports if only export default',
@@ -44,8 +39,8 @@ module.exports = [
     name: 'export a function as default entry',
     code: 'export default () => "default-entry"',
     expected: {
-      module: defaultEntry,
-      exports: defaultEntry
+      module: () => 'default-entry',
+      exports: () => 'default-entry'
     }
   },
   {
@@ -53,11 +48,11 @@ module.exports = [
     code: 'export default () => "default-entry"; export const other = "other-entry"',
     expected: {
       module: {
-        default: defaultEntry,
+        default: () => 'default-entry',
         other: 'other-entry'
       },
       exports: {
-        default: defaultEntry,
+        default: () => 'default-entry',
         other: 'other-entry'
       }
     }
