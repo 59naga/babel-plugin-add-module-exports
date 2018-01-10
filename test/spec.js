@@ -1,6 +1,7 @@
 module.exports = [
   {
     name: 'export default to module.exports if only export default',
+    options: {},
     code: 'export default "default-entry"',
     expected: {
       module: 'default-entry',
@@ -9,6 +10,7 @@ module.exports = [
   },
   {
     name: 'export other entries to module.exports if no default entry',
+    options: {},
     code: 'export const other1 = "entry1"; export const other2 = "entry2"',
     expected: {
       module: {
@@ -23,6 +25,7 @@ module.exports = [
   },
   {
     name: 'not export default to module.exports if export multiple entries',
+    options: {},
     code: 'export default "default-entry"; export const other = "other-entry"',
     expected: {
       module: {
@@ -37,6 +40,7 @@ module.exports = [
   },
   {
     name: 'export a function as default entry',
+    options: {},
     code: 'export default () => "default-entry"',
     expected: {
       module: () => 'default-entry',
@@ -45,6 +49,7 @@ module.exports = [
   },
   {
     name: 'export default function entry with other entries',
+    options: {},
     code: 'export default () => "default-entry"; export const other = "other-entry"',
     expected: {
       module: {
@@ -59,6 +64,7 @@ module.exports = [
   },
   {
     name: 'not override default object with other export entries',
+    options: {},
     code: 'export default { value: 1 }; export const value = 2',
     expected: {
       module: {
@@ -75,6 +81,7 @@ module.exports = [
     // even be compatible with wrong behavior: https://github.com/babel/babel/issues/2212#issuecomment-131110500
     // name: 'allow the wrong default export as like in Babel 5',
     name: 'follow the Babel@5 behavior (end of #4)',
+    options: {},
     code: 'export default { name: "test", version: "0.0.1" }',
     expected: {
       module: {
@@ -89,6 +96,7 @@ module.exports = [
   },
   {
     name: 'export default using transform-export-extensions (#11)',
+    options: {},
     code: "export default from './fixtures/issue011.js'",
     expected: {
       module: 'this is file',
@@ -97,6 +105,7 @@ module.exports = [
   },
   {
     name: 'export default and named declarations (#30)',
+    options: {},
     code: 'const foo = 1;const BAR = 2;export { foo as default, BAR }',
     expected: {
       module: {
