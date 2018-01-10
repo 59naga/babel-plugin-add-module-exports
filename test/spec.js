@@ -117,5 +117,42 @@ module.exports = [
         BAR: 2
       }
     }
+  },
+  {
+    name: 'add a default property to the exported object',
+    options: { addDefaultProperty: true },
+    code: 'export default { foo: "bar" }',
+    expected: {
+      // eslint-disable-next-line no-return-assign
+      module: { foo: 'bar', default: function () { return this.default = this } }.default(),
+      // eslint-disable-next-line no-return-assign
+      exports: { foo: 'bar', default: function () { return this.default = this } }.default()
+    }
+  },
+  {
+    name: 'add a default property to the exported function',
+    options: { addDefaultProperty: true },
+    code: 'export default () => "default-entry"',
+    expected: {
+      // eslint-disable-next-line no-return-assign
+      module: ((f) => f.default = f)(() => 'default-entry'),
+      // eslint-disable-next-line no-return-assign
+      exports: ((f) => f.default = f)(() => 'default-entry')
+    }
+  },
+  {
+    name: 'do not add default property when multiple items are exported',
+    options: { addDefaultProperty: true },
+    code: 'export default () => "default-entry"; export const other = "other-entry"',
+    expected: {
+      module: {
+        default: () => 'default-entry',
+        other: 'other-entry'
+      },
+      exports: {
+        default: () => 'default-entry',
+        other: 'other-entry'
+      }
+    }
   }
 ]

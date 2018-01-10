@@ -23,7 +23,7 @@ class AssignmentReminder {
 module.exports = ({types}) => ({
   visitor: {
     CallExpression: {
-      exit (path) {
+      exit (path, state) {
         // Not `Object.defineProperty`, skip
         if (path.get('callee.name').node) {
           return
@@ -58,6 +58,15 @@ module.exports = ({types}) => ({
               types.expressionStatement(types.assignmentExpression(
                 '=',
                 types.memberExpression(types.identifier('module'), types.identifier('exports')),
+                types.memberExpression(types.identifier('exports'), types.stringLiteral('default'), true)
+              ))
+            ])
+          }
+          if (state.opts.addDefaultProperty) {
+            program.pushContainer('body', [
+              types.expressionStatement(types.assignmentExpression(
+                '=',
+                types.memberExpression(types.memberExpression(types.identifier('module'), types.identifier('exports')), types.identifier('default')),
                 types.memberExpression(types.identifier('exports'), types.stringLiteral('default'), true)
               ))
             ])
