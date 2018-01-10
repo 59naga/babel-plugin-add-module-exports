@@ -31,22 +31,40 @@ export function inspect (object) {
   return result.replace('Object {', '{') // HACK the module.export inspect
 }
 
-export function equal (actual, expected) {
+export function equal (actual, expected, previouslyChecked = []) {
   if (typeof expected === 'string') {
     assert(actual.toString() === expected)
-  } else if (typeof expected === 'function') {
-    assert(actual() === expected())
-  } else if (Array.isArray(expected)) {
-    assert(actual.length === expected.length)
-    for (const key in expected) {
-      equal(actual[key], expected[key])
-    }
-  } else if (typeof expected === 'object') {
-    equal(Object.keys(actual), Object.keys(expected))
-    for (const prop in expected) {
-      equal(actual[prop], expected[prop])
-    }
+  } else if (typeof expected === 'function' || typeof expected === 'object') {
+    equalObject(actual, expected, previouslyChecked)
   } else {
     assert(inspect(actual) === inspect(expected))
+  }
+}
+
+function equalObject (actual, expected, previouslyChecked) {
+  // Prevent infinite recursing when encountering circular references
+  if (previouslyChecked.includes(expected)) return
+  previouslyChecked.push(expected)
+
+  // Check if both have the same properties
+  if (Array.isArray(expected)) {
+    assert(actual.length === expected.length)
+  } else {
+    const actualKeys = Object.keys(actual)
+    const expectedKeys = Object.keys(expected)
+    assert(actualKeys.length === expectedKeys.length)
+    for (const i in expectedKeys) {
+      assert(actualKeys[i] === expectedKeys[i])
+    }
+  }
+
+  // For function we also compare results
+  if (typeof expected === 'function') {
+    assert(actual() === expected())
+  }
+
+  assert(typeof actual === typeof expected)
+  for (const prop in expected) {
+    equal(actual[prop], expected[prop], previouslyChecked)
   }
 }
