@@ -101,6 +101,24 @@ It also works with [transform-es2015-modules-umd](http://babeljs.io/docs/plugins
 }
 ```
 
+If you're exporting an object and wish to maintain compatibility with code using the `require('./bundle.js').default` syntax, you can optionally enable the `addDefaultProperty` option as follows:
+
+```json
+{
+  "presets": ["es2015"],
+  "plugins": [
+    ["add-module-exports", {
+      "addDefaultProperty": true
+    }]
+  ]
+}
+```
+This will cause a second line of code to be added which aliases the `default` name to the exported object like so:
+```js
+module.exports = exports['default'];
+module.exports.default = exports['default']
+```
+
 License
 ---
 [MIT](http://59naga.mit-license.org/)
