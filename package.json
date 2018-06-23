@@ -11,7 +11,7 @@
     "test": "mocha --require babel-register",
     "cover": "abby cover:* --parse serial",
     "cover:test": "nyc --reporter=lcov --reporter=text npm test",
-    "cover:report": "npm-if TRAVIS \"codeclimate-test-reporter < coverage/lcov.info\"",
+    "cover:report": "npm-unless TRAVIS_PULL_REQUEST \"codeclimate-test-reporter < coverage/lcov.info\"",
     "lint": "eslint src test",
     "postversion": "node changelog.js > CHANGELOG.md && git add CHANGELOG.md && echo ':wq' | git commit --amend && git push --follow-tags",
     "build": "babel src --out-dir lib --source-maps"
