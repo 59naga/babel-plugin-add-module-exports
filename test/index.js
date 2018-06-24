@@ -32,15 +32,15 @@ describe('babel-plugin-add-module-exports', () => {
     }))
 
   it('should export with `babel-plugin-rewire` (#19)', () =>
-      testPlugin("export default { stuff: 'things' }", {
-        presets: ['react', 'es2015'],
-        plugins: [
-          './src/index.js',
-          'rewire'
-        ]
-      }, (module) => {
-        assert(module.stuff === 'things')
-      }))
+    testPlugin("export default { stuff: 'things' }", {
+      presets: ['react', 'es2015'],
+      plugins: [
+        './src/index.js',
+        'rewire'
+      ]
+    }, (module) => {
+      assert(module.stuff === 'things')
+    }))
 
   testCases.forEach((testCase) =>
     it(`should ${testCase.name}`, () =>

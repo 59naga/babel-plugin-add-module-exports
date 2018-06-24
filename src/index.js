@@ -20,7 +20,6 @@ module.exports = ({types}) => ({
             } else {
               hasExportNamed = true
             }
-            return
           }
         })
 
