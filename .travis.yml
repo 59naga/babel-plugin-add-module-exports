@@ -13,8 +13,6 @@ node_js:
   - 8
   - 9
   - 10
-before_script:
-  - npm prune
 script:
   - npm run cover
   - npm run lint
