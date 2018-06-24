@@ -5,7 +5,7 @@ import testCases from './spec'
 describe('babel-plugin-add-module-exports', () => {
   it('should not export default to `module.exports` by default.', () =>
     testPlugin(testCases[0].code, {
-      presets: ['es2015']
+      presets: ['env']
     }, (module) => {
       assert(module !== 'default-entry')
       assert(module.default === 'default-entry')
@@ -18,7 +18,7 @@ describe('babel-plugin-add-module-exports', () => {
 
   it('should handle duplicated plugin references (#1)', () =>
     testPlugin(testCases[0].code, {
-      presets: ['es2015'],
+      presets: ['env'],
       plugins: [
         './src/index.js',
         './src/index.js',
@@ -33,7 +33,7 @@ describe('babel-plugin-add-module-exports', () => {
 
   it('should export with `babel-plugin-rewire` (#19)', () =>
     testPlugin("export default { stuff: 'things' }", {
-      presets: ['react', 'es2015'],
+      presets: ['react', 'env'],
       plugins: [
         './src/index.js',
         'rewire'
@@ -45,7 +45,7 @@ describe('babel-plugin-add-module-exports', () => {
   testCases.forEach((testCase) =>
     it(`should ${testCase.name}`, () =>
       testPlugin(testCase.code, {
-        presets: ['es2015'],
+        presets: ['env'],
         plugins: [
           'transform-export-extensions', // use export-from syntax
           './src/index.js'
