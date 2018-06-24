@@ -8,8 +8,6 @@ branches:
 
 # Language options
 language: node_js
-before_install:
-  - if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
 node_js:
   - 4
   - 5
