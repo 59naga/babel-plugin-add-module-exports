@@ -8,12 +8,6 @@ babel-plugin-add-module-exports
   <a href="https://travis-ci.org/59naga/babel-plugin-add-module-exports">
     <img src="http://img.shields.io/travis/59naga/babel-plugin-add-module-exports.svg?style=flat-square">
   </a>
-  <a href="https://codeclimate.com/github/59naga/babel-plugin-add-module-exports/coverage">
-    <img src="https://img.shields.io/codeclimate/github/59naga/babel-plugin-add-module-exports.svg?style=flat-square">
-  </a>
-  <a href="https://codeclimate.com/github/59naga/babel-plugin-add-module-exports">
-    <img src="https://img.shields.io/codeclimate/coverage/github/59naga/babel-plugin-add-module-exports.svg?style=flat-square">
-  </a>
 </p>
 
 Why?
