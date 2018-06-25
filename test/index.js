@@ -60,7 +60,7 @@ describe('babel-plugin-add-module-exports', () => {
         presets: ['env'],
         plugins: [
           'transform-export-extensions', // use export-from syntax
-          './src/index.js'
+          ['./src/index.js', testCase.options]
         ]
       }, (module) => {
         // assert module root (module.exports) object
