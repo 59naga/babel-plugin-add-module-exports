@@ -5,7 +5,7 @@ class AssignmentReminder {
   }
   evaluateExpression (path, property = 'expression') {
     // Not `exports.anything`, skip
-    if (!path.get(`${property}.left`).node || !path.get(`${property}.left.property`).node) {
+    if (!path.get(`${property}.left`).node || !path.get(`${property}.left.object`).node) {
       return
     }
 
@@ -25,7 +25,7 @@ module.exports = ({types}) => ({
     CallExpression: {
       exit (path, state) {
         // Not `Object.defineProperty`, skip
-        if (path.get('callee.name').node) {
+        if (!path.get('callee.object').node) {
           return
         }
 
