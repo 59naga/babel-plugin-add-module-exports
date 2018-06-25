@@ -1,4 +1,5 @@
 import assert from 'assert'
+import {transform as babelTransform} from 'babel-core'
 import { testPlugin, equal } from './helpers'
 import testCases from './spec'
 
@@ -10,6 +11,17 @@ describe('babel-plugin-add-module-exports', () => {
       assert(module !== 'default-entry')
       assert(module.default === 'default-entry')
     }))
+
+  it('should not handle an pure esmodule', () => {
+    const code = `export default 'default-entry';`
+    const result = babelTransform(code, {
+      presets: [['env', {modules: false}]],
+      plugins: [
+        './src/index.js'
+      ]
+    })
+    assert(code === result.code)
+  })
 
   it('plugin should export to module.exports(#31)', () => {
     const plugin = require('../src')
