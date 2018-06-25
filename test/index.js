@@ -57,7 +57,7 @@ describe('babel-plugin-add-module-exports', () => {
   testCases.forEach((testCase) =>
     it(`should ${testCase.name}`, () =>
       testPlugin(testCase.code, {
-        presets: ['env'],
+        presets: [['env', testCase.env]],
         plugins: [
           'transform-export-extensions', // use export-from syntax
           ['./src/index.js', testCase.options]
