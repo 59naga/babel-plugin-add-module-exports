@@ -138,6 +138,14 @@ module.exports = [
     }
   },
   {
+    name: `only access real properties(#54)`,
+    code: 'var a=function(){function t(e,r){for(var n=0;n<r.length;n++){var t=r[n];t.enumerable=t.enumerable||!1,t.configurable=!0,"value"in t&&(t.writable=!0),Object.defineProperty(e,t.key,t)}}return function(e,r,n){return r&&t(e.prototype,r),n&&t(e,n),e}}();',
+    expected: {
+      module: {},
+      exports: {}
+    }
+  },
+  {
     name: 'add a default property to the exported object',
     options: { addDefaultProperty: true },
     code: 'export default { foo: "bar" }',
