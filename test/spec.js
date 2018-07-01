@@ -7,34 +7,15 @@ module.exports = [
       exports: 'default-entry'
     }
   },
-  // TODO:
-  // {
-  //   name: 'export default to module.exports if only export default using amd',
-  //   code: 'export default "default-entry"',
-  //   env: {modules: 'amd'},
-  //   expected: {
-  //     module: 'default-entry',
-  //     exports: 'default-entry'
-  //   }
-  // },
-  // {
-  //   name: 'export default to module.exports if only export default using umd',
-  //   code: 'export default "default-entry"',
-  //   env: {modules: 'umd'},
-  //   expected: {
-  //     module: 'default-entry',
-  //     exports: 'default-entry'
-  //   }
-  // },
-  // {
-  //   name: 'export default to module.exports if only export default using systemjs',
-  //   code: 'export default "default-entry"',
-  //   env: {modules: 'systemjs'},
-  //   expected: {
-  //     module: 'default-entry',
-  //     exports: 'default-entry'
-  //   }
-  // },
+  {
+    name: 'export default to module.exports if only export default using umd',
+    code: 'export default "default-entry"',
+    env: {modules: 'umd'},
+    expected: {
+      module: 'default-entry',
+      exports: 'default-entry'
+    }
+  },
   {
     name: 'export other entries to module.exports if no default entry',
     code: 'export const other1 = "entry1"; export const other2 = "entry2"',
