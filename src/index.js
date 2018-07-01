@@ -1,23 +1,23 @@
+// 1. find to ExportsModuleDeclaration(`Object.defineProperty(exports, "__esModule", {value: true});`)
+// 2. find to ExportsAssignmentExpression(`exports.default`, `exports.foo` etc)
+// 3. add `module.exports` if exists only `exports.default` assignment
+// The above works after executing `preset-env`(transform-es2015-modules-*) in `Plugin.post`
+
 module.exports = ({template, types}) => {
   let pluginOptions
-  const visitor = {
+  const ExportsModuleDeclarationVisitor = {
     CallExpression: {
       exit (path) {
-        // Not `Object.defineProperty`, skip
-        if (!path.get('callee.object').node) {
-          return
-        }
-
         if (isExportsModuleDeclaration(path)) {
           const finder = new ExportFinder(path)
 
           if (finder.isOnlyDefaultExport()) {
-            const root = finder.getRootNode()
+            const rootPath = finder.getRootPath()
 
-            // HACK: `program.node.body.push` instead of pushContainer(due doesn't work in Plugin.post)
-            root.node.body.push(template('module.exports = exports.default')())
+            // HACK: `path.node.body.push` instead of path.pushContainer(due doesn't work in Plugin.post)
+            rootPath.node.body.push(template('module.exports = exports.default')())
             if (pluginOptions.addDefaultProperty) {
-              root.node.body.push(template('module.exports.default = exports.default')())
+              rootPath.node.body.push(template('module.exports.default = exports.default')())
             }
           }
         }
@@ -33,12 +33,17 @@ module.exports = ({template, types}) => {
       }
     },
     post (fileMap) {
-      fileMap.path.traverse(visitor)
+      fileMap.path.traverse(ExportsModuleDeclarationVisitor)
     }
   }
 }
 
 function isExportsModuleDeclaration (path) {
+  // Not `Object.defineProperty`, skip
+  if (!path.get('callee.object').node) {
+    return false
+  }
+
   const callee = `${path.get('callee.object.name').node}.${path.get('callee.property.name').node}`
   const args = path.get('arguments').map(path => {
     if (path.isStringLiteral()) {
@@ -59,11 +64,11 @@ class ExportFinder {
     this.hasExportDefault = false
     this.hasExportNamed = false
   }
-  getRootNode () {
+  getRootPath () {
     return this.path.parentPath.parentPath
   }
   isOnlyDefaultExport () {
-    this.getRootNode().get('body').forEach((path) => {
+    this.getRootPath().get('body').forEach((path) => {
       if (path.isVariableDeclaration()) {
         this.findExport(path.get('declarations.0'), 'init')
       } else {
