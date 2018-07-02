@@ -162,5 +162,13 @@ module.exports = [
         other: 'other-entry'
       }
     }
+  },
+  {
+    name: 'handle AssignmentExpression (#58)',
+    code: 'let foo; foo = "default-entry"\nexport default foo',
+    expected: {
+      module: 'default-entry',
+      exports: 'default-entry'
+    }
   }
 ]
