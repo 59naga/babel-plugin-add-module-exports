@@ -97,7 +97,7 @@ into
 export default 'foo'
 ```
 
-Also `0.3.0-pre` doesn't support `amd`, `umd`, `systemjs` modules(not change it).
+But `0.3.0-pre.2` currently support `commonjs`, `umd`. doesn't support `amd`, `systemjs` modules(don't use, destroy).
 
 Options
 ---
