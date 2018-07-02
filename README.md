@@ -77,10 +77,10 @@ Write the name to [babelrc](https://babeljs.io/docs/usage/babelrc/). It works wi
 }
 ```
 
-### v0.3.0-pre
+### v0.3.0
 
 **However, the plugin doesn't change the pure-esmodule**.
-this plugin makes changes only when exists `Object.defineProperty(exports,"__esModule", {value: true});` (in other words, using [`{modules:'commonjs'}`](https://babeljs.io/docs/en/babel-plugin-transform-es2015-modules-commonjs/)).
+this plugin makes changes only when exists `exports.default` (in other words, using [commonjs](https://babeljs.io/docs/en/babel-plugin-transform-es2015-modules-commonjs/)).
 
 ```json
 {
@@ -97,7 +97,8 @@ into
 export default 'foo'
 ```
 
-But `0.3.0-pre.2` currently support `commonjs`, `umd`. doesn't support `amd`, `systemjs` modules(don't use, destroy).
+`0.3.0` Currently support is `commonjs` and `umd`.
+Doesn't support `amd`, `systemjs` modules(don't use. there are no plans to support at the moment).
 
 Options
 ---
