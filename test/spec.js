@@ -10,7 +10,7 @@ module.exports = [
   {
     name: 'export default to module.exports if only export default using umd',
     code: 'export default "default-entry"',
-    env: {modules: 'umd'},
+    env: { modules: 'umd' },
     expected: {
       module: 'default-entry',
       exports: 'default-entry'
@@ -120,7 +120,8 @@ module.exports = [
   },
   {
     name: `only access real properties(#54)`,
-    code: 'var a=function(){function t(e,r){for(var n=0;n<r.length;n++){var t=r[n];t.enumerable=t.enumerable||!1,t.configurable=!0,"value"in t&&(t.writable=!0),Object.defineProperty(e,t.key,t)}}return function(e,r,n){return r&&t(e.prototype,r),n&&t(e,n),e}}();',
+    code:
+      'var a=function(){function t(e,r){for(var n=0;n<r.length;n++){var t=r[n];t.enumerable=t.enumerable||!1,t.configurable=!0,"value"in t&&(t.writable=!0),Object.defineProperty(e,t.key,t)}}return function(e,r,n){return r&&t(e.prototype,r),n&&t(e,n),e}}();',
     expected: {
       module: {},
       exports: {}
@@ -131,10 +132,18 @@ module.exports = [
     options: { addDefaultProperty: true },
     code: 'export default { foo: "bar" }',
     expected: {
-      // eslint-disable-next-line no-return-assign
-      module: { foo: 'bar', default: function () { return this.default = this } }.default(),
-      // eslint-disable-next-line no-return-assign
-      exports: { foo: 'bar', default: function () { return this.default = this } }.default()
+      module: {
+        foo: 'bar',
+        default() {
+          return (this.default = this)
+        }
+      }.default(),
+      exports: {
+        foo: 'bar',
+        default() {
+          return (this.default = this)
+        }
+      }.default()
     }
   },
   {
@@ -142,10 +151,8 @@ module.exports = [
     options: { addDefaultProperty: true },
     code: 'export default () => "default-entry"',
     expected: {
-      // eslint-disable-next-line no-return-assign
-      module: ((f) => f.default = f)(() => 'default-entry'),
-      // eslint-disable-next-line no-return-assign
-      exports: ((f) => f.default = f)(() => 'default-entry')
+      module: (f => (f.default = f))(() => 'default-entry'),
+      exports: (f => (f.default = f))(() => 'default-entry')
     }
   },
   {

@@ -3,10 +3,10 @@
 // 3. add `module.exports` if exists only `exports.default` assignment
 // The above works after executing `preset-env`(transform-es2015-modules-*) in `Plugin.post`
 
-module.exports = ({template, types}) => {
+module.exports = ({ template }) => {
   let pluginOptions
   const ExportsDefaultVisitor = {
-    AssignmentExpression (path) {
+    AssignmentExpression(path) {
       if (path.get('left').matchesPattern('exports.default')) {
         const finder = new ExportsFinder(path)
         if (!finder.isOnlyExportsDefault()) {
@@ -28,40 +28,46 @@ module.exports = ({template, types}) => {
 
   return {
     visitor: {
-      Program (path, state) {
+      Program(path, state) {
         // HACK: can't get plugin options in Plugin.post
         pluginOptions = state.opts
       }
     },
-    post (fileMap) {
+    post(fileMap) {
       fileMap.path.traverse(ExportsDefaultVisitor)
     }
   }
 }
 
 class ExportsFinder {
-  constructor (exportsDefaultPath) {
+  constructor(exportsDefaultPath) {
     this.path = exportsDefaultPath
     this.hasExportsDefault = false
     this.hasExportsNamed = false
     this.hasModuleExports = false
   }
-  getRootPath () {
+
+  getRootPath() {
     return this.path.parentPath.parentPath
   }
-  isOnlyExportsDefault () {
-    this.getRootPath().get('body').forEach((path) => {
-      if (path.isVariableDeclaration()) {
-        this.findExport(path.get('declarations.0'), 'init')
-      } else {
-        if (path.isExpressionStatement() && path.get('expression').isAssignmentExpression()) {
+
+  isOnlyExportsDefault() {
+    this.getRootPath()
+      .get('body')
+      .forEach(path => {
+        if (path.isVariableDeclaration()) {
+          this.findExport(path.get('declarations.0'), 'init')
+        } else if (
+          path.isExpressionStatement() &&
+          path.get('expression').isAssignmentExpression()
+        ) {
           this.findExport(path)
         }
-      }
-    })
+      })
     return this.hasExportsDefault && !this.hasExportsNamed && !this.hasModuleExports
   }
-  findExport (path, property = 'expression') {
+
+  findExport(path, property = 'expression') {
     // Not `exports.anything`, skip
     if (!path.get(`${property}.left`).node || !path.get(`${property}.left.object`).node) {
       return
@@ -79,9 +85,9 @@ class ExportsFinder {
     if (`${objectName}.${propertyName}` === 'module.exports') {
       this.hasModuleExports = true
     }
-    return null
   }
-  isAmd () {
+
+  isAmd() {
     const rootPath = this.getRootPath()
     const hasntAmdRoot = !(rootPath.parentPath && rootPath.parentPath.parentPath)
     if (hasntAmdRoot) {

@@ -1,14 +1,14 @@
 import vm from 'vm'
 import util from 'util'
-import {transform as babelTransform} from 'babel-core'
+import { transform as babelTransform } from 'babel-core'
 import assert from 'assert'
 
-export function createSandbox () {
+export function createSandbox() {
   const exports = {}
   const sandbox = {
     exports,
     module: { exports },
-    require (path) {
+    require(path) {
       delete require.cache[require.resolve(path)]
       return require(path)
     }
@@ -17,16 +17,16 @@ export function createSandbox () {
   return sandbox
 }
 
-export function createSandboxAmd () {
+export function createSandboxAmd() {
   const exports = {}
   const sandbox = {
     exports,
     module: { exports },
-    require (path) {
+    require(path) {
       delete require.cache[require.resolve(path)]
       return require(path)
     },
-    define (args, fn) {
+    define(args, fn) {
       fn(exports)
     }
   }
@@ -34,7 +34,7 @@ export function createSandboxAmd () {
   return sandbox
 }
 
-export function testPlugin (code, options, fn, useAmdSandbox = false) {
+export function testPlugin(code, options, fn, useAmdSandbox = false) {
   const result = babelTransform(code, options)
   const sandbox = useAmdSandbox ? createSandboxAmd() : createSandbox()
 
@@ -43,12 +43,12 @@ export function testPlugin (code, options, fn, useAmdSandbox = false) {
   fn(sandbox.module.exports, result.code)
 }
 
-export function inspect (object) {
+export function inspect(object) {
   const result = util.inspect(object)
   return result.replace('Object {', '{') // HACK the module.export inspect
 }
 
-export function equal (actual, expected, previouslyChecked = []) {
+export function equal(actual, expected, previouslyChecked = []) {
   if (typeof expected === 'string') {
     assert(actual.toString() === expected)
   } else if (typeof expected === 'function' || typeof expected === 'object') {
@@ -58,21 +58,21 @@ export function equal (actual, expected, previouslyChecked = []) {
   }
 }
 
-function equalObject (actual, expected, previouslyChecked) {
+function equalObject(actual, expected, previouslyChecked) {
   // Prevent infinite recursing when encountering circular references
   if (previouslyChecked.includes(expected)) return
   previouslyChecked.push(expected)
 
   // Check if both have the same properties
+  const actualKeys = Object.keys(actual)
+  const expectedKeys = Object.keys(expected)
   if (Array.isArray(expected)) {
     assert(actual.length === expected.length)
   } else {
-    const actualKeys = Object.keys(actual)
-    const expectedKeys = Object.keys(expected)
     assert(actualKeys.length === expectedKeys.length)
-    for (const i in expectedKeys) {
+    expectedKeys.forEach((key, i) => {
       assert(actualKeys[i] === expectedKeys[i])
-    }
+    })
   }
 
   // For function we also compare results
@@ -81,7 +81,7 @@ function equalObject (actual, expected, previouslyChecked) {
   }
 
   assert(typeof actual === typeof expected)
-  for (const prop in expected) {
-    equal(actual[prop], expected[prop], previouslyChecked)
-  }
+  expectedKeys.forEach(key => {
+    equal(actual[key], expected[key], previouslyChecked)
+  })
 }
