@@ -36,11 +36,13 @@ describe('babel-plugin-add-module-exports', () => {
         './src/index.js',
         './src/index.js'
       ]
-    }, (module) => {
+    }, (module, code) => {
       assert(module === 'default-entry')
 
       // @see https://github.com/59naga/babel-plugin-add-module-exports/issues/12#issuecomment-157023722
       assert(module.default === undefined)
+
+      assert(code === `"use strict";\n\nObject.defineProperty(exports, "__esModule", {\n  value: true\n});\nexports.default = "default-entry";\nmodule.exports = exports.default;`)
     }))
 
   it('should export with `babel-plugin-rewire` (#19)', () =>
