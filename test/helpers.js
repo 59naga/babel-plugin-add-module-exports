@@ -23,7 +23,7 @@ export function testPlugin (code, options, fn) {
 
   vm.runInNewContext(result.code, sandbox)
 
-  fn(sandbox.module.exports)
+  fn(sandbox.module.exports, result.code)
 }
 
 export function inspect (object) {
