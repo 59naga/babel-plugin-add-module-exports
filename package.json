@@ -16,6 +16,7 @@
   "devDependencies": {
     "babel-cli": "^6.5.1",
     "babel-core": "^6.5.1",
+    "babel-eslint": "^8.2.5",
     "babel-plugin-rewire": "^1.0.0-rc-3",
     "babel-plugin-transform-export-extensions": "^6.5.0",
     "babel-preset-env": "^1.7.0",
@@ -23,19 +24,18 @@
     "babel-preset-react": "^6.5.0",
     "babel-template": "^6.26.0",
     "babel-types": "^6.26.0",
-    "chokidar": "^2.0.4",
     "conventional-github-releaser": "^3.1.2",
-    "eslint": "^5.0.0",
-    "eslint-config-standard": "^12.0.0-alpha.0",
-    "eslint-plugin-import": "^2.12.0",
-    "eslint-plugin-mocha": "^5.0.0",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.8.0",
-    "eslint-plugin-standard": "^3.1.0",
+    "eslint": "^5.0.1",
+    "eslint-config-airbnb-standard": "^1.6.6",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-prettier": "^2.6.1",
     "mocha": "^5.2.0",
-    "npm-statement": "^0.0.0",
-    "nyc": "^12.0.2",
-    "power-assert": "^1.2.0"
+    "power-assert": "^1.2.0",
+    "prettier": "^1.13.7"
+  },
+  "optionalDependencies": {
+    "chokidar": "^2.0.4"
   },
   "keywords": [
     "babel-plugin",

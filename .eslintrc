@@ -1,10 +1,31 @@
 ---
-plugins:
-  - mocha
-
-extends:
-  - standard
+parser: babel-eslint
 
 env:
   node: true
   mocha: true
+
+extends:
+  - airbnb-standard
+  - plugin:prettier/recommended
+
+plugins:
+  - prettier
+
+rules:
+  prettier/prettier:
+    - error
+    - singleQuote: true
+      semi: false
+      printWidth: 100
+
+  complexity:
+    - error
+    - 10
+
+  global-require:
+    - warn
+  import/no-dynamic-require:
+    - warn
+  no-param-reassign:
+    - warn
