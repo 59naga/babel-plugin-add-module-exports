@@ -9,8 +9,11 @@ module.exports = ({template, types}) => {
     AssignmentExpression (path) {
       const name = `${path.get('left.object.name').node}.${path.get(`left.property.name`).node}`
       if (name === 'exports.default') {
-        const finder = new ExportFinder(path)
-        if (!finder.isOnlyDefaultExport()) {
+        const finder = new ExportsFinder(path)
+        if (!finder.isOnlyExportsDefault()) {
+          return
+        }
+        if (finder.isAmd()) {
           return
         }
         const rootPath = finder.getRootPath()
@@ -37,9 +40,9 @@ module.exports = ({template, types}) => {
   }
 }
 
-class ExportFinder {
-  constructor (path) {
-    this.path = path
+class ExportsFinder {
+  constructor (exportsDefaultPath) {
+    this.path = exportsDefaultPath
     this.hasExportsDefault = false
     this.hasExportsNamed = false
     this.hasModuleExports = false
@@ -47,7 +50,7 @@ class ExportFinder {
   getRootPath () {
     return this.path.parentPath.parentPath
   }
-  isOnlyDefaultExport () {
+  isOnlyExportsDefault () {
     this.getRootPath().get('body').forEach((path) => {
       if (path.isVariableDeclaration()) {
         this.findExport(path.get('declarations.0'), 'init')
@@ -78,5 +81,21 @@ class ExportFinder {
       this.hasModuleExports = true
     }
     return null
+  }
+  isAmd () {
+    const rootPath = this.getRootPath()
+    const hasntAmdRoot = !(rootPath.parentPath && rootPath.parentPath.parentPath)
+    if (hasntAmdRoot) {
+      return false
+    }
+
+    const amdRoot = rootPath.parentPath.parentPath
+    if (!amdRoot.isCallExpression()) {
+      return false
+    }
+    if (amdRoot.get('callee.name').node === 'define') {
+      return true
+    }
+    return false
   }
 }
