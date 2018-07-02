@@ -1,25 +1,24 @@
-// 1. find to ExportsModuleDeclaration(`Object.defineProperty(exports, "__esModule", {value: true});`)
-// 2. find to ExportsAssignmentExpression(`exports.default`, `exports.foo` etc)
+// 1. find to `exports.default`
+// 2. find to all Expression(`exports.default`, `exports.foo` etc)
 // 3. add `module.exports` if exists only `exports.default` assignment
 // The above works after executing `preset-env`(transform-es2015-modules-*) in `Plugin.post`
 
 module.exports = ({template, types}) => {
   let pluginOptions
-  const ExportsModuleDeclarationVisitor = {
-    CallExpression: {
-      exit (path) {
-        if (isExportsModuleDeclaration(path)) {
-          const finder = new ExportFinder(path)
+  const ExportsDefaultVisitor = {
+    AssignmentExpression (path) {
+      const name = `${path.get('left.object.name').node}.${path.get(`left.property.name`).node}`
+      if (name === 'exports.default') {
+        const finder = new ExportFinder(path)
+        if (!finder.isOnlyDefaultExport()) {
+          return
+        }
+        const rootPath = finder.getRootPath()
 
-          if (finder.isOnlyDefaultExport()) {
-            const rootPath = finder.getRootPath()
-
-            // HACK: `path.node.body.push` instead of path.pushContainer(due doesn't work in Plugin.post)
-            rootPath.node.body.push(template('module.exports = exports.default')())
-            if (pluginOptions.addDefaultProperty) {
-              rootPath.node.body.push(template('module.exports.default = exports.default')())
-            }
-          }
+        // HACK: `path.node.body.push` instead of path.pushContainer(due doesn't work in Plugin.post)
+        rootPath.node.body.push(template('module.exports = exports.default')())
+        if (pluginOptions.addDefaultProperty) {
+          rootPath.node.body.push(template('module.exports.default = exports.default')())
         }
       }
     }
@@ -33,29 +32,9 @@ module.exports = ({template, types}) => {
       }
     },
     post (fileMap) {
-      fileMap.path.traverse(ExportsModuleDeclarationVisitor)
+      fileMap.path.traverse(ExportsDefaultVisitor)
     }
   }
-}
-
-function isExportsModuleDeclaration (path) {
-  // Not `Object.defineProperty`, skip
-  if (!path.get('callee.object').node) {
-    return false
-  }
-
-  const callee = `${path.get('callee.object.name').node}.${path.get('callee.property.name').node}`
-  const args = path.get('arguments').map(path => {
-    if (path.isStringLiteral()) {
-      return path.get('value').node
-    }
-    if (path.get('properties').length) {
-      return `${path.get('properties.0.key.name').node}:${path.get('properties.0.value.value').node}`
-    }
-  }).join(' ')
-
-  // TODO: support loose syntax `  exports.__esModule = true;`
-  return `${callee}${args}` === 'Object.defineProperty __esModule value:true'
 }
 
 class ExportFinder {
