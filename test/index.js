@@ -20,6 +20,8 @@ describe('babel-plugin-add-module-exports', () => {
         './src/index.js'
       ]
     })
+
+    // use code comparison instead of vm.runInNewContext(doesn't work `export` syntax)
     assert(code === result.code)
   })
 
