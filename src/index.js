@@ -7,13 +7,7 @@ module.exports = ({template, types}) => {
   let pluginOptions
   const ExportsDefaultVisitor = {
     AssignmentExpression (path) {
-      // Not `object.anything`, skip
-      if (!path.get('left.object').node) {
-        return
-      }
-
-      const name = `${path.get('left.object.name').node}.${path.get(`left.property.name`).node}`
-      if (name === 'exports.default') {
+      if (path.get('left').matchesPattern('exports.default')) {
         const finder = new ExportsFinder(path)
         if (!finder.isOnlyExportsDefault()) {
           return
