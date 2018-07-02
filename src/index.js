@@ -42,6 +42,7 @@ class ExportFinder {
     this.path = path
     this.hasExportDefault = false
     this.hasExportNamed = false
+    this.hasModuleExports = false
   }
   getRootPath () {
     return this.path.parentPath.parentPath
@@ -56,7 +57,7 @@ class ExportFinder {
         }
       }
     })
-    return this.hasExportDefault && !this.hasExportNamed
+    return this.hasExportDefault && !this.hasExportNamed && !this.hasModuleExports
   }
   findExport (path, property = 'expression') {
     // Not `exports.anything`, skip
@@ -72,6 +73,9 @@ class ExportFinder {
       } else {
         this.hasExportNamed = true
       }
+    }
+    if (`${objectName}.${propertyName}` === 'module.exports') {
+      this.hasModuleExports = true
     }
     return null
   }
