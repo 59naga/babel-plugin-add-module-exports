@@ -40,8 +40,8 @@ module.exports = ({template, types}) => {
 class ExportFinder {
   constructor (path) {
     this.path = path
-    this.hasExportDefault = false
-    this.hasExportNamed = false
+    this.hasExportsDefault = false
+    this.hasExportsNamed = false
     this.hasModuleExports = false
   }
   getRootPath () {
@@ -57,7 +57,7 @@ class ExportFinder {
         }
       }
     })
-    return this.hasExportDefault && !this.hasExportNamed && !this.hasModuleExports
+    return this.hasExportsDefault && !this.hasExportsNamed && !this.hasModuleExports
   }
   findExport (path, property = 'expression') {
     // Not `exports.anything`, skip
@@ -69,9 +69,9 @@ class ExportFinder {
     const propertyName = path.get(`${property}.left.property.name`).node
     if (objectName === 'exports') {
       if (propertyName === 'default') {
-        this.hasExportDefault = true
+        this.hasExportsDefault = true
       } else {
-        this.hasExportNamed = true
+        this.hasExportsNamed = true
       }
     }
     if (`${objectName}.${propertyName}` === 'module.exports') {
