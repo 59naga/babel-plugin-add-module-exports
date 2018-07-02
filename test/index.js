@@ -25,6 +25,16 @@ describe('babel-plugin-add-module-exports', () => {
     assert(code === result.code)
   })
 
+  it('should not handle an amd module', () =>
+    testPlugin(`export default 'default-entry';`, {
+      presets: [['env', {modules: 'amd'}]],
+      plugins: [
+        './src/index.js'
+      ]
+    }, (module, code) => {
+      assert(module.default === 'default-entry')
+    }, true))
+
   it('plugin should export to module.exports(#31)', () => {
     const plugin = require('../src')
     assert(typeof plugin === 'function')

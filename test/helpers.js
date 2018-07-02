@@ -17,9 +17,26 @@ export function createSandbox () {
   return sandbox
 }
 
-export function testPlugin (code, options, fn) {
+export function createSandboxAmd () {
+  const exports = {}
+  const sandbox = {
+    exports,
+    module: { exports },
+    require (path) {
+      delete require.cache[require.resolve(path)]
+      return require(path)
+    },
+    define (args, fn) {
+      fn(exports)
+    }
+  }
+
+  return sandbox
+}
+
+export function testPlugin (code, options, fn, useAmdSandbox = false) {
   const result = babelTransform(code, options)
-  const sandbox = createSandbox()
+  const sandbox = useAmdSandbox ? createSandboxAmd() : createSandbox()
 
   vm.runInNewContext(result.code, sandbox)
 
