@@ -2,11 +2,10 @@
 parser: babel-eslint
 
 env:
-  node: true
   mocha: true
 
 extends:
-  - airbnb-standard
+  - standard
   - plugin:prettier/recommended
 
 plugins:
@@ -22,10 +21,3 @@ rules:
   complexity:
     - error
     - 10
-
-  global-require:
-    - warn
-  import/no-dynamic-require:
-    - warn
-  no-param-reassign:
-    - warn
