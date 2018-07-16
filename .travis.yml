@@ -14,17 +14,21 @@ node_js:
   - 9
   - 10
 script:
-  - npm test
-  - npm run lint
+  - yarn test
+  - yarn lint
 
 # Npm publish options
 before_deploy:
-  - npm run build
+  - yarn build
 deploy:
   skip_cleanup: true # keep the devDependencies
-  provider: npm
+  provider: script
+  script:
+    - npm publish --tag next
   email: i59naga@icloud.com
   api_key:
     secure: wb2x7bXs0icTV5IJuxz9pXSK5i9QtfMLYxRic7N7oa6psYOOjWsRqahoXLFAKJ77jB0p208J9TdcQ1lY7FTL/LC0+iBjKRjpnKeFKtgkF3u7EH/kA3FBbGpY27IUMyPoH0mAjXZKql9h/nkmXecgIrhbHLg9Rnj0l5RTT6TWu/ZHOiCNM7GPQrrd8nzhewMSBIa2ztQT/98GQX1D88kONMk4ilwPoUUjhXVwmwP9FuQtAZ/Za6ESyuRNu3BE7dXP7dtG9I/6gxZm3Al3iH2FYI4ryjBGzpHXrlyZCIQfckLvs/A1rkHPZYtBPFBrrJhFwpmRM9kELB8D+NpqXFQGRq0OYXO++9KsLPHu6DG5wTbcK4YkzUx3IwBSZDbZd4TW80s0ivO5AFBaqcFGeS0aw24axZ1bVe+nuIT0GmYFJ71WDh9gU55z2cJIdjjJpse5KdDT9NbvrtJafOLlabtrQRtFS9QHYqk6iglzkCbfglU9mcFe7cCdwnob9NRidjwLNqsO2AiEESDfB/21Qw/08dY2EWZNoA67ZLhwX37Gq55/M6w6XGkQ47KzT6EYY6Ef2SEYmtF0YQYkVoR++ydcNGQhG6dT4BkrNyiP5KpE4IYVXTCW3EokYghjzCPnGO2bRw8rbnbnNkKDLK5Mxsbb3pd1nQMGmAjf2hR5PTJj3TE=
   on:
     node: 6
+    tags: true
+    branch: master
