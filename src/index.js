@@ -78,7 +78,7 @@ class ExportsFinder {
     if (objectName === 'exports') {
       if (propertyName === 'default') {
         this.hasExportsDefault = true
-      } else {
+      } else if (propertyName !== '__esModule') {
         this.hasExportsNamed = true
       }
     }
