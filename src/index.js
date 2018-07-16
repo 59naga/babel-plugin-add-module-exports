@@ -56,18 +56,20 @@ class ExportsFinder {
       .get('body')
       .forEach(path => {
         if (path.isVariableDeclaration()) {
-          this.findExport(path.get('declarations.0'), 'init')
+          this.findExports(path.get('declarations.0'), 'init')
         } else if (
           path.isExpressionStatement() &&
           path.get('expression').isAssignmentExpression()
         ) {
-          this.findExport(path)
+          this.findExports(path)
+        } else {
+          this.findExportsInCallExpression(path)
         }
       })
     return this.hasExportsDefault && !this.hasExportsNamed && !this.hasModuleExports
   }
 
-  findExport(path, property = 'expression') {
+  findExports(path, property = 'expression') {
     // Not `exports.anything`, skip
     if (!path.get(`${property}.left`).node || !path.get(`${property}.left.object`).node) {
       return
@@ -85,6 +87,24 @@ class ExportsFinder {
     if (`${objectName}.${propertyName}` === 'module.exports') {
       this.hasModuleExports = true
     }
+  }
+
+  findExportsInCallExpression(path) {
+    const self = this
+    path.traverse({
+      CallExpression(path) {
+        if (!path.get('callee').matchesPattern('Object.defineProperty')) {
+          return
+        }
+
+        const [identifier, prop] = path.get('arguments')
+        const objectName = identifier.get('name').node
+        const propertyName = prop.get('value').node
+        if (objectName === 'exports' && propertyName !== '__esModule') {
+          self.hasExportsNamed = true
+        }
+      }
+    })
   }
 
   isAmd() {
