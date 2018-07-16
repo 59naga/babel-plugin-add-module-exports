@@ -8,6 +8,15 @@ module.exports = [
     }
   },
   {
+    name: 'export default to module.exports using loose mode(#61)',
+    code: 'export default "default-entry"',
+    env: { loose: true },
+    expected: {
+      module: 'default-entry',
+      exports: 'default-entry'
+    }
+  },
+  {
     name: 'export default to module.exports if only export default using umd',
     code: 'export default "default-entry"',
     env: { modules: 'umd' },
