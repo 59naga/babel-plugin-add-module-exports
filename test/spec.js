@@ -114,6 +114,20 @@ module.exports = [
     }
   },
   {
+    name: 'not export default using transform-export-extensions and wildcard syntax (#59)',
+    code: "export * from './fixtures/issue059.js'; export default 'default-entry'",
+    expected: {
+      module: {
+        other: 'other-entry',
+        default: 'default-entry'
+      },
+      exports: {
+        other: 'other-entry',
+        default: 'default-entry'
+      }
+    }
+  },
+  {
     name: 'export default and named declarations (#30)',
     code: 'const foo = 1;const BAR = 2;export { foo as default, BAR }',
     expected: {
