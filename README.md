@@ -123,6 +123,10 @@ module.exports = exports['default'];
 module.exports.default = exports['default']
 ```
 
+See also
+---
+* [babel-plugin-experimental-syntax-dynamic-import](https://github.com/59naga/babel-plugin-experimental-syntax-dynamic-import)
+
 License
 ---
 [MIT](http://59naga.mit-license.org/)
