@@ -200,5 +200,13 @@ module.exports = [
       module: 'default-entry',
       exports: 'default-entry'
     }
+  },
+  {
+    name: 'handle no init AssignmentExpression (#60, #63)',
+    code: 'var foo; \nexport default "default-entry"',
+    expected: {
+      module: 'default-entry',
+      exports: 'default-entry'
+    }
   }
 ]
