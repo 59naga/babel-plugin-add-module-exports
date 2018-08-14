@@ -1,5 +1,6 @@
 # Quick boot options
 sudo: false
+cache: yarn
 
 # Ignore version tags
 branches:
@@ -19,6 +20,7 @@ script:
 
 # Npm publish options
 before_deploy:
+  - rm .gitignore
   - yarn build
 deploy:
   skip_cleanup: true # keep the devDependencies
@@ -26,6 +28,7 @@ deploy:
   tag: next
   email: i59naga@icloud.com
   api_key:
-    secure: wb2x7bXs0icTV5IJuxz9pXSK5i9QtfMLYxRic7N7oa6psYOOjWsRqahoXLFAKJ77jB0p208J9TdcQ1lY7FTL/LC0+iBjKRjpnKeFKtgkF3u7EH/kA3FBbGpY27IUMyPoH0mAjXZKql9h/nkmXecgIrhbHLg9Rnj0l5RTT6TWu/ZHOiCNM7GPQrrd8nzhewMSBIa2ztQT/98GQX1D88kONMk4ilwPoUUjhXVwmwP9FuQtAZ/Za6ESyuRNu3BE7dXP7dtG9I/6gxZm3Al3iH2FYI4ryjBGzpHXrlyZCIQfckLvs/A1rkHPZYtBPFBrrJhFwpmRM9kELB8D+NpqXFQGRq0OYXO++9KsLPHu6DG5wTbcK4YkzUx3IwBSZDbZd4TW80s0ivO5AFBaqcFGeS0aw24axZ1bVe+nuIT0GmYFJ71WDh9gU55z2cJIdjjJpse5KdDT9NbvrtJafOLlabtrQRtFS9QHYqk6iglzkCbfglU9mcFe7cCdwnob9NRidjwLNqsO2AiEESDfB/21Qw/08dY2EWZNoA67ZLhwX37Gq55/M6w6XGkQ47KzT6EYY6Ef2SEYmtF0YQYkVoR++ydcNGQhG6dT4BkrNyiP5KpE4IYVXTCW3EokYghjzCPnGO2bRw8rbnbnNkKDLK5Mxsbb3pd1nQMGmAjf2hR5PTJj3TE=
+    secure: CMFF6dnRAVd6EPWfEOdsFSgY3XQxEDS0TYyvIDt2Xy9eaGaFq4jwdpCQ+9OZNGfDXcmBjuDXnsWv6TqxYHohm5hLYYqU1CT1fFVUU0sCxl41HKyliXUC21qaT/lB68EcRSnDAdCAcQ/jLFIZObBxwHD7yUOyoBnmkTvcBn5Kgi6kaKYjJlzP4Z0zP0MbO3+2R2LTj01eAcE7TtHehITcP4CktPGRkDLgRjFmOahg63MnfpsqHX22p/l/Z3OqCnguhHK6b7cpjwHL4zfyEHU/K+o6KsLErFidIAg1yKzFskaHUImVYQiJhkJaJyzA9YW4xW1UYHjO1BwxkxsJOM0EMbzWxH8hEvrig6wgP8Midp3RXWusJ8VbZvNcyj4OPYWhc4aR5GOlr7W36xp04d0BP+WZVBycxYVbMFj5SmbF6BXjeC6w1Aj3m+oUUIC5SUKwDD3hyfgCrBoAGcKhKxRF9SGUWdHSouuisuFWTSdFiUugBPrYx+LhBVVkByLAvy1J7j+yl03I08X4/N6c4mJ2e6eE7B02oaS4tTyJT8BADJ7pE6vG4r3T+qRy7rqU4SHJ4pwzG2AyuvwxeTwz7PCSWFD/XgQgd2qROLpekT4Ds8v9TPt4vSfWgN4otIIRV91UcLvBBmlERCHwcwmX4iU3p7tYMVhcdrhI9FpDNNK/4J0=
   on:
     node: 6
+    repo: 59naga/babel-plugin-add-module-exports
