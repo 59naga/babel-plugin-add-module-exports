@@ -71,7 +71,11 @@ class ExportsFinder {
 
   findExports(path, property = 'expression') {
     // Not `exports.anything`, skip
-    if (!path.get(`${property}.left`).node || !path.get(`${property}.left.object`).node) {
+    if (
+      !path.get(`${property}`).node ||
+      !path.get(`${property}.left`).node ||
+      !path.get(`${property}.left.object`).node
+    ) {
       return
     }
 
