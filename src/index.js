@@ -5,23 +5,44 @@
 
 module.exports = ({ template }) => {
   let pluginOptions
-  const ExportsDefaultVisitor = {
-    AssignmentExpression(path) {
-      if (path.get('left').matchesPattern('exports.default')) {
-        const finder = new ExportsFinder(path)
-        if (!finder.isOnlyExportsDefault()) {
-          return
-        }
-        if (finder.isAmd()) {
-          return
-        }
-        const rootPath = finder.getRootPath()
 
-        // HACK: `path.node.body.push` instead of path.pushContainer(due doesn't work in Plugin.post)
-        rootPath.node.body.push(template('module.exports = exports.default')())
-        if (pluginOptions.addDefaultProperty) {
-          rootPath.node.body.push(template('module.exports.default = exports.default')())
-        }
+  function addModuleExportsDefaults(path) {
+    const finder = new ExportsFinder(path)
+    if (!finder.isOnlyExportsDefault()) {
+      return
+    }
+    if (finder.isAmd()) {
+      return
+    }
+    const rootPath = finder.getRootPath()
+
+    // HACK: `path.node.body.push` instead of path.pushContainer(due doesn't work in Plugin.post)
+    rootPath.node.body.push(template('module.exports = exports.default')())
+    if (pluginOptions.addDefaultProperty) {
+      rootPath.node.body.push(template('module.exports.default = exports.default')())
+    }
+  }
+
+  const ExportsDefaultVisitor = {
+    CallExpression(path) {
+      if (!path.get('callee').matchesPattern('Object.defineProperty')) {
+        return
+      }
+
+      const [identifier, prop] = path.get('arguments')
+      const objectName = identifier.get('name').node
+      const propertyName = prop.get('value').node
+
+      if ((objectName === 'exports' || objectName === '_exports') && propertyName === 'default') {
+        addModuleExportsDefaults(path)
+      }
+    },
+    AssignmentExpression(path) {
+      if (
+        path.get('left').matchesPattern('exports.default') ||
+        path.get('left').matchesPattern('_exports.default')
+      ) {
+        addModuleExportsDefaults(path)
       }
     }
   }
@@ -48,7 +69,9 @@ class ExportsFinder {
   }
 
   getRootPath() {
-    return this.path.parentPath.parentPath
+    return this.path.findParent(path => {
+      return path.key === 'body' || !path.parentPath
+    })
   }
 
   isOnlyExportsDefault() {
@@ -81,7 +104,7 @@ class ExportsFinder {
 
     const objectName = path.get(`${property}.left.object.name`).node
     const propertyName = path.get(`${property}.left.property.name`).node
-    if (objectName === 'exports') {
+    if (objectName === 'exports' || objectName === '_exports') {
       if (propertyName === 'default') {
         this.hasExportsDefault = true
       } else if (propertyName !== '__esModule') {
@@ -104,8 +127,16 @@ class ExportsFinder {
         const [identifier, prop] = path.get('arguments')
         const objectName = identifier.get('name').node
         const propertyName = prop.get('value').node
-        if (objectName === 'exports' && propertyName !== '__esModule') {
-          self.hasExportsNamed = true
+
+        if (
+          (objectName === 'exports' || objectName === '_exports') &&
+          propertyName !== '__esModule'
+        ) {
+          if (propertyName === 'default') {
+            self.hasExportsDefault = true
+          } else {
+            self.hasExportsNamed = true
+          }
         }
       }
     })
