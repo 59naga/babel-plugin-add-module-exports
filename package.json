@@ -11,7 +11,7 @@
     "test": "mocha --require babel-register",
     "lint": "eslint src test",
     "build": "babel src --out-dir lib --source-maps",
-    "postversion": "git push --follow-tags && conventional-github-releaser -p angular -r 0"
+    "postversion": "git push --follow-tags && conventional-github-releaser -p angular"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
