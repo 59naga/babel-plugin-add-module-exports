@@ -1,6 +1,5 @@
 import vm from 'vm'
 import util from 'util'
-import { transform as babelTransform } from 'babel-core'
 import assert from 'assert'
 
 export function createSandbox() {
@@ -34,7 +33,7 @@ export function createSandboxAmd() {
   return sandbox
 }
 
-export function testPlugin(code, options, fn, useAmdSandbox = false) {
+export function testPlugin(babelTransform, code, options, fn, useAmdSandbox = false) {
   const result = babelTransform(code, options)
   const sandbox = useAmdSandbox ? createSandboxAmd() : createSandbox()
 
@@ -64,8 +63,8 @@ function equalObject(actual, expected, previouslyChecked) {
   previouslyChecked.push(expected)
 
   // Check if both have the same properties
-  const actualKeys = Object.keys(actual)
-  const expectedKeys = Object.keys(expected)
+  const actualKeys = Object.keys(actual).sort()
+  const expectedKeys = Object.keys(expected).sort()
   if (Array.isArray(expected)) {
     assert(actual.length === expected.length)
   } else {
