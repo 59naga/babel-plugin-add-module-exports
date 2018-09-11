@@ -61,9 +61,9 @@ Usage
 Install this plugin from npm:
 
 ```bash
-npm install babel-plugin-add-module-exports@next --save-dev
+npm install babel-plugin-add-module-exports --save-dev
 # or
-yarn add -D babel-plugin-add-module-exports@next
+yarn add -D babel-plugin-add-module-exports
 ```
 
 Write the name to [babelrc](https://babeljs.io/docs/usage/babelrc/). It works with [preset-env](http://babeljs.io/docs/en/babel-preset-env/) to output CommonJS code:
@@ -77,7 +77,7 @@ Write the name to [babelrc](https://babeljs.io/docs/usage/babelrc/). It works wi
 }
 ```
 
-### v0.3.0
+### modules: false
 
 **However, the plugin doesn't change the pure-esmodule**.
 this plugin makes changes only when exists `exports.default` (in other words, using [commonjs](https://babeljs.io/docs/en/babel-plugin-transform-es2015-modules-commonjs/)).
@@ -97,7 +97,7 @@ into
 export default 'foo'
 ```
 
-`0.3.0` Currently support is `commonjs` and `umd`.
+`1.0.0` Currently support is `commonjs` and `umd`.
 Doesn't support `amd`, `systemjs` modules(don't use. there are no plans to support at the moment).
 
 Options
