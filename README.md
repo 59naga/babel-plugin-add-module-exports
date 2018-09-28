@@ -70,7 +70,7 @@ Write the name to [babelrc](https://babeljs.io/docs/usage/babelrc/). It works wi
 
 ```json
 {
-  "presets": ["env"],
+  "presets": ["@babel/env"],
   "plugins": [
     "add-module-exports"
   ]
@@ -84,7 +84,7 @@ this plugin makes changes only when exists `exports.default` (in other words, us
 
 ```json
 {
-  "presets": [["env", {"modules": false}]],
+  "presets": [["@babel/env", {"modules": false}]],
   "plugins": [
     "add-module-exports"
   ]
@@ -99,6 +99,17 @@ export default 'foo'
 
 `1.0.0` Currently support is `commonjs` and `umd`.
 Doesn't support `amd`, `systemjs` modules(don't use. there are no plans to support at the moment).
+
+### with Webpack
+
+Likewise, webpack doesn't perform commonjs transformation for [codesplitting](https://webpack.js.org/guides/code-splitting/).  Need to set commonjs conversion.
+
+```js
+module.exports = {
+  presets: [["@babel/env", { modules: "commonjs" }]],
+  plugins: ["add-module-exports"]
+};
+```
 
 Options
 ---
