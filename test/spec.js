@@ -208,5 +208,27 @@ module.exports = [
       module: 'default-entry',
       exports: 'default-entry'
     }
+  },
+  {
+    name: 'handle a single quote string literal export',
+    code: `
+          Object.defineProperty(exports, '__esModule', {value: true});
+          exports['default'] = 'foo';
+        `,
+    expected: {
+      module: 'foo',
+      exports: 'foo'
+    }
+  },
+  {
+    name: 'handle a double quote string literal export',
+    code: `
+          Object.defineProperty(exports, '__esModule', {value: true});
+          exports["default"] = 'foo';
+        `,
+    expected: {
+      module: 'foo',
+      exports: 'foo'
+    }
   }
 ]

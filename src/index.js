@@ -103,7 +103,10 @@ class ExportsFinder {
     }
 
     const objectName = path.get(`${property}.left.object.name`).node
-    const propertyName = path.get(`${property}.left.property.name`).node
+    // Check name of  MemberExpressions and values of StringLiterals
+    const propertyName =
+      path.get(`${property}.left.property.name`).node ||
+      path.get(`${property}.left.property.value`).node
     if (objectName === 'exports' || objectName === '_exports') {
       if (propertyName === 'default') {
         this.hasExportsDefault = true
