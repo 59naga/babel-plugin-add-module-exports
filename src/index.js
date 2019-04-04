@@ -103,7 +103,9 @@ class ExportsFinder {
     }
 
     const objectName = path.get(`${property}.left.object.name`).node
-    const propertyName = path.get(`${property}.left.property.name`).node
+    const propertyName =
+      path.get(`${property}.left.property.name`).node ||
+      path.get(`${property}.left.property.value`).node
     if (objectName === 'exports' || objectName === '_exports') {
       if (propertyName === 'default') {
         this.hasExportsDefault = true
