@@ -208,5 +208,19 @@ module.exports = [
       module: 'default-entry',
       exports: 'default-entry'
     }
+  },
+  {
+    name: 'export same var as default and named declarations',
+    code: 'const foo="bar";export { foo, foo as default };',
+    expected: {
+      exports: {
+        default: 'bar',
+        foo: 'bar'
+      },
+      module: {
+        default: 'bar',
+        foo: 'bar'
+      }
+    }
   }
 ]
