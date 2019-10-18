@@ -107,6 +107,7 @@ class ExportsFinder {
     if (objectName === 'exports' || objectName === '_exports') {
       if (propertyName === 'default') {
         this.hasExportsDefault = true
+        this.findExports(path.get(property), 'right')
       } else if (propertyName !== '__esModule') {
         this.hasExportsNamed = true
       }
