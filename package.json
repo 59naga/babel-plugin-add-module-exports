@@ -40,9 +40,7 @@
     "power-assert": "^1.6.0",
     "prettier": "^1.13.7"
   },
-  "optionalDependencies": {
-    "chokidar": "^2.0.4"
-  },
+  "optionalDependencies": {},
   "keywords": [
     "babel-plugin",
     "module.exports"
